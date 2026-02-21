@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajay Swaminathan — Product Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+
+  <div id="cur"></div>
+  <div id="curR"></div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-name">Ajay Swaminathan</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-hire">Hire me</a>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="home">
+    <div class="hero-main">
+      <div class="hero-avail">
+        <span class="avail-dot"></span>
+        Open to full-time PM roles · Munich, Germany
+      </div>
+      <h1 class="hero-h">
+        <span class="row"><span>Founder-turned-PM</span></span>
+        <span class="row"><span>who builds with both</span></span>
+        <span class="row"><span><em>rigor and instinct.</em></span></span>
+      </h1>
+      <p class="hero-sub">
+        I'm AJ — a product manager based in Munich with a background in founding, venture capital, and product. I
+        combine engineering rigour with entrepreneurial speed to take products from zero to launch and beyond.
+      </p>
+      <div class="hero-actions">
+        <a href="#work" class="btn-primary">See my work</a>
+        <a href="#contact" class="btn-ghost">Get in touch →</a>
+      </div>
+    </div>
+    <div class="hero-footer">
+      <div class="hero-stats">
+        <div class="hs"><span class="hs-n">5+</span><span class="hs-l">Products launched</span></div>
+        <div class="hs"><span class="hs-n">3</span><span class="hs-l">Industries</span></div>
+        <div class="hs"><span class="hs-n">TUM</span><span class="hs-l">Masters, Munich</span></div>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>Scroll
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WORK ══ -->
+  <section class="sec" id="work">
+    <div class="sec-label">Work</div>
+
+    <div class="work-header">
+      <!-- Filter buttons -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="product">Product</button>
+        <button class="filter-btn" data-filter="business-case">Business case</button>
+        <button class="filter-btn" data-filter="growth">Growth</button>
+        <button class="filter-btn" data-filter="delivery">Delivery</button>
+      </div>
+      <!-- Search -->
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="caseSearch" placeholder="Search by keyword…" autocomplete="off" />
+      </div>
+    </div>
+
+    <div class="case-list" id="caseList">
+
+      <!-- 01 -->
+      <div class="case-item" data-index="2" data-tags="product retention b2b saas discovery jtbd churn workflow">
+        <span class="ci-num">01</span>
+        <div class="ci-body">
+          <div class="ci-meta">
+            <span class="ci-type">Product · B2B SaaS</span>
+            <div class="ci-tags"><span class="ci-tag">Discovery</span><span class="ci-tag">Retention</span><span
+                class="ci-tag">JTBD</span></div>
+          </div>
+          <h3 class="ci-title">Redesigning the core workflow that cut churn by 40%</h3>
+          <p class="ci-summary">Led discovery and redesign of a high-friction workflow for 50K+ daily users. JTBD
+            interviews and session replay pinpointed a 4-step process collapsible to one. Shipped in 6 weeks.</p>
+          <button class="ci-expand-btn" aria-expanded="false">
+            Details <span class="ci-expand-arrow">↓</span>
+          </button>
+          <div class="ci-detail">
+            <div class="ci-detail-inner">
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">The problem</div>
+                <p class="ci-detail-text">Enterprise accounts were churning quietly — no angry tickets, just silence.
+                  Session recordings revealed users were repeating the same 4-step workflow action every session, adding
+                  3+ unnecessary minutes of friction per use.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">My approach</div>
+                <p class="ci-detail-text">Ran 12 JTBD interviews alongside session replay analysis. Identified the core
+                  insight: <strong>users weren't confused, they were frustrated</strong>. Scoped a targeted fix —
+                  collapse the 4 steps to 1 with context pre-filling — and A/B tested before full rollout.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Outcomes</div>
+                <div class="ci-detail-metrics">
+                  <div class="ci-dm"><span class="ci-dm-n">−40%</span><span class="ci-dm-l">Churn rate</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">−3 min</span><span class="ci-dm-l">Per session</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">94%</span><span class="ci-dm-l">Completion rate</span></div>
+                </div>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Tools & methods</div>
+                <p class="ci-detail-text">Jobs-to-be-Done interviews · Session replay (FullStory) · A/B testing · Funnel
+                  analysis · Progressive rollout</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ci-aside">
+          <span class="ci-metric-n">−40%</span>
+          <span class="ci-metric-l">Churn rate</span>
+          <a href="case-01-churn.html" class="ci-link">Full case ↗</a>
+        </div>
+      </div>
+
+      <!-- 02 -->
+      <div class="case-item" data-index="3"
+        data-tags="business-case enterprise platform roi executive consolidation investment">
+        <span class="ci-num">02</span>
+        <div class="ci-body">
+          <div class="ci-meta">
+            <span class="ci-type">Business Case · Enterprise</span>
+            <div class="ci-tags"><span class="ci-tag">ROI</span><span class="ci-tag">Executive</span><span
+                class="ci-tag">Strategy</span></div>
+          </div>
+          <h3 class="ci-title">Building the $2M case for platform consolidation</h3>
+          <p class="ci-summary">Three tools, one bill, zero happy users. Built the full ROI model, risk register, and
+            phased roadmap. Walked the C-suite through it. Board approved at the first meeting it was presented.</p>
+          <button class="ci-expand-btn" aria-expanded="false">
+            Details <span class="ci-expand-arrow">↓</span>
+          </button>
+          <div class="ci-detail">
+            <div class="ci-detail-inner">
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">The problem</div>
+                <p class="ci-detail-text">Three overlapping tools with combined license costs of $340K/year — but when
+                  you added engineering overhead and support burden, the true cost was closer to
+                  <strong>$890K/year</strong>. Nobody had made that visible.
+                </p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">My approach</div>
+                <p class="ci-detail-text">Built a full TCO model that reframed the ask: not "spend $2M" but "stop losing
+                  $890K/year." Added a phased roadmap with a 6-month ROI signal and ran three stakeholder alignment
+                  rounds before the board ever saw it.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Outcomes</div>
+                <div class="ci-detail-metrics">
+                  <div class="ci-dm"><span class="ci-dm-n">$2M</span><span class="ci-dm-l">Secured</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">3.2×</span><span class="ci-dm-l">Projected ROI</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">6 wk</span><span class="ci-dm-l">To approval</span></div>
+                </div>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Tools & methods</div>
+                <p class="ci-detail-text">TCO analysis · ROI modeling · Risk register · Stakeholder alignment · Phased
+                  roadmap · Executive presentation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ci-aside">
+          <span class="ci-metric-n">$2M</span>
+          <span class="ci-metric-l">Secured</span>
+          <a href="case-02-platform.html" class="ci-link">Full case ↗</a>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="case-item" data-index="4"
+        data-tags="product consumer mobile activation onboarding 0to1 zero to one personalisation">
+        <span class="ci-num">03</span>
+        <div class="ci-body">
+          <div class="ci-meta">
+            <span class="ci-type">Product · Consumer Mobile</span>
+            <div class="ci-tags"><span class="ci-tag">0→1</span><span class="ci-tag">Activation</span><span
+                class="ci-tag">Mobile</span></div>
+          </div>
+          <h3 class="ci-title">0→1: The feature that became the #1 activation driver</h3>
+          <p class="ci-summary">Identified activation drop-off through cohort analysis. Led cross-functional delivery of
+            a personalisation feature in 8 weeks. Now drives 62% of new user activation.</p>
+          <button class="ci-expand-btn" aria-expanded="false">
+            Details <span class="ci-expand-arrow">↓</span>
+          </button>
+          <div class="ci-detail">
+            <div class="ci-detail-inner">
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">The problem</div>
+                <p class="ci-detail-text">D7 retention was poor despite strong acquisition. Cohort analysis revealed
+                  that users who completed a specific personalisation step had <strong>34% higher D7 retention</strong>
+                  — but 73% of users were skipping it because it felt optional and abstract.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">My approach</div>
+                <p class="ci-detail-text">The aha moment already existed. The problem was we were making it too easy to
+                  skip. Redesigned the onboarding to make personalisation feel like setup — immediate visual feedback,
+                  clear progress, harder (but not impossible) to skip.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Outcomes</div>
+                <div class="ci-detail-metrics">
+                  <div class="ci-dm"><span class="ci-dm-n">62%</span><span class="ci-dm-l">Activation rate</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">+34%</span><span class="ci-dm-l">D7 retention</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">8 wk</span><span class="ci-dm-l">To ship</span></div>
+                </div>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Tools & methods</div>
+                <p class="ci-detail-text">Cohort analysis · User interviews · 0→1 scoping · Beta testing ·
+                  Cross-functional delivery (eng, design, data)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ci-aside">
+          <span class="ci-metric-n">62%</span>
+          <span class="ci-metric-l">Activation rate</span>
+          <a href="case-03-activation.html" class="ci-link">Full case ↗</a>
+        </div>
+      </div>
+
+      <!-- 04 -->
+      <div class="case-item" data-index="5"
+        data-tags="business-case growth gtm expansion market apac southeast asia strategy">
+        <span class="ci-num">04</span>
+        <div class="ci-body">
+          <div class="ci-meta">
+            <span class="ci-type">Business Case · Growth</span>
+            <div class="ci-tags"><span class="ci-tag">GTM</span><span class="ci-tag">Expansion</span><span
+                class="ci-tag">Strategy</span></div>
+          </div>
+          <h3 class="ci-title">APAC expansion: the market analysis that got a yes</h3>
+          <p class="ci-summary">8 weeks of competitive teardowns, pricing sensitivity interviews across 3 countries, and
+            a phased GTM playbook. Presented to C-suite. Approved for Year 2 roadmap.</p>
+          <button class="ci-expand-btn" aria-expanded="false">
+            Details <span class="ci-expand-arrow">↓</span>
+          </button>
+          <div class="ci-detail">
+            <div class="ci-detail-inner">
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">The problem</div>
+                <p class="ci-detail-text">Leadership wanted to expand to Southeast Asia but had no structured analysis —
+                  no market sizing, no competitive view, no GTM model. "Southeast Asia" is not a strategy. The question
+                  was: where, for whom, and how?</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">My approach</div>
+                <p class="ci-detail-text">Structured the analysis around 3 questions: Is there a market? Can we win? At
+                  what cost? Used 40 user interviews across Indonesia, Vietnam, and the Philippines to validate
+                  assumptions. Recommended a phased model gated on Year 1 KPIs.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Outcomes</div>
+                <div class="ci-detail-metrics">
+                  <div class="ci-dm"><span class="ci-dm-n">3</span><span class="ci-dm-l">Markets roadmapped</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">40</span><span class="ci-dm-l">User interviews</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">Q1</span><span class="ci-dm-l">Launch approved</span></div>
+                </div>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Tools & methods</div>
+                <p class="ci-detail-text">Market sizing · Competitive analysis · Pricing sensitivity interviews · Phased
+                  GTM model · Financial scenario modeling</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ci-aside">
+          <span class="ci-metric-n">3</span>
+          <span class="ci-metric-l">Markets entered</span>
+          <a href="case-04-apac.html" class="ci-link">Full case ↗</a>
+        </div>
+      </div>
+
+      <!-- 05 -->
+      <div class="case-item" data-index="6" data-tags="growth product conversion pricing trial saas research heatmap">
+        <span class="ci-num">05</span>
+        <div class="ci-body">
+          <div class="ci-meta">
+            <span class="ci-type">Product · Growth</span>
+            <div class="ci-tags"><span class="ci-tag">Conversion</span><span class="ci-tag">Pricing</span><span
+                class="ci-tag">Research</span></div>
+          </div>
+          <h3 class="ci-title">Pricing page reframe that lifted trial conversions 28%</h3>
+          <p class="ci-summary">Trial CVR was stuck at 8%. Heatmaps and user interviews revealed the issue wasn't price
+            — it was uncertainty. A clearer value story moved CVR to 10.2% without touching the price.</p>
+          <button class="ci-expand-btn" aria-expanded="false">
+            Details <span class="ci-expand-arrow">↓</span>
+          </button>
+          <div class="ci-detail">
+            <div class="ci-detail-inner">
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">The problem</div>
+                <p class="ci-detail-text">A quarter of pricing experiments — discounts, trial extensions, urgency
+                  messaging — had moved nothing. Session recordings showed users re-reading the feature list and
+                  leaving. They weren't comparing plans; they were unsure if the product was right for them.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">My approach</div>
+                <p class="ci-detail-text">Reframed from "what does each plan include?" to "what will change for you?" —
+                  replaced the feature grid with use-case scenarios, added role-specific social proof, and simplified
+                  the CTA. <strong>Zero price changes.</strong></p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Outcomes</div>
+                <div class="ci-detail-metrics">
+                  <div class="ci-dm"><span class="ci-dm-n">+28%</span><span class="ci-dm-l">CVR lift</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">10.2%</span><span class="ci-dm-l">New trial CVR</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">$0</span><span class="ci-dm-l">Price changes</span></div>
+                </div>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Tools & methods</div>
+                <p class="ci-detail-text">Heatmap analysis · Session recordings · User interviews · A/B testing ·
+                  Copywriting · Value proposition design</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ci-aside">
+          <span class="ci-metric-n">+28%</span>
+          <span class="ci-metric-l">Trial CVR</span>
+          <a href="case-05-pricing.html" class="ci-link">Full case ↗</a>
+        </div>
+      </div>
+
+      <!-- 06 -->
+      <div class="case-item" data-index="7"
+        data-tags="delivery process leadership sprint agile engineering cycle time shipping">
+        <span class="ci-num">06</span>
+        <div class="ci-body">
+          <div class="ci-meta">
+            <span class="ci-type">Product · Delivery</span>
+            <div class="ci-tags"><span class="ci-tag">Process</span><span class="ci-tag">Leadership</span><span
+                class="ci-tag">Delivery</span></div>
+          </div>
+          <h3 class="ci-title">Cutting the release cycle from 6 weeks to 2</h3>
+          <p class="ci-summary">Slow shipping was hurting morale and competitive position. Three process changes — a
+            spec-ready gate, time-boxed reviews, and parallel QA — tripled release frequency in one quarter.</p>
+          <button class="ci-expand-btn" aria-expanded="false">
+            Details <span class="ci-expand-arrow">↓</span>
+          </button>
+          <div class="ci-detail">
+            <div class="ci-detail-inner">
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">The problem</div>
+                <p class="ci-detail-text">Releases every 6–8 weeks. Engineers demoralised by the gap between "done" and
+                  "live." Three bottlenecks found: specs written too late, review cycles with no time-box, and
+                  sequential QA that started only after engineering finished.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">My approach</div>
+                <p class="ci-detail-text">Introduced a <strong>spec-ready gate</strong> (no sprint entry without
+                  sign-off), <strong>3-day time-box</strong> on stakeholder reviews, and <strong>parallel QA</strong>
+                  running alongside engineering. Rolled in phases over 6 weeks so changes could be isolated.</p>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Outcomes</div>
+                <div class="ci-detail-metrics">
+                  <div class="ci-dm"><span class="ci-dm-n">3×</span><span class="ci-dm-l">Release frequency</span></div>
+                  <div class="ci-dm"><span class="ci-dm-n">−70%</span><span class="ci-dm-l">Mid-sprint changes</span>
+                  </div>
+                  <div class="ci-dm"><span class="ci-dm-n">+18pt</span><span class="ci-dm-l">Eng NPS</span></div>
+                </div>
+              </div>
+              <div class="ci-detail-section">
+                <div class="ci-detail-label">Tools & methods</div>
+                <p class="ci-detail-text">Process audit · Sprint retrospectives · Stakeholder alignment · Change
+                  management · Cycle time measurement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ci-aside">
+          <span class="ci-metric-n">3×</span>
+          <span class="ci-metric-l">Ship speed</span>
+          <a href="case-06-delivery.html" class="ci-link">Full case ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+      <button class="pg-btn pg-prev" id="pgPrev" disabled>← Previous</button>
+      <div class="pg-info" id="pgInfo"></div>
+      <button class="pg-btn pg-next" id="pgNext">Next →</button>
+    </div>
+    <p class="no-results" id="noResults">No case studies match your search.</p>
+  </section>
+
+  <!-- ══ APPROACH ══ -->
+  <section class="sec" id="approach">
+    <div class="sec-label">Approach</div>
+    <div class="approach-wrap">
+      <div class="au">
+        <p style="font-size:16px;font-weight:400;letter-spacing:-0.01em;color:var(--ink)">How I work</p>
+        <p class="approach-copy">Good product work starts with understanding the problem clearly before reaching for a
+          solution. The rest tends to follow.</p>
+      </div>
+      <div class="approach-steps">
+        <div class="ap-step"><span class="ap-n">01</span>
+          <div>
+            <div class="ap-title">Start with the problem</div>
+            <p class="ap-desc">User interviews, support tickets, data — everything gets read before a spec is written. I
+              spend more time here than most, because it pays off later.</p>
+          </div>
+        </div>
+        <div class="ap-step"><span class="ap-n">02</span>
+          <div>
+            <div class="ap-title">Build the business case</div>
+            <p class="ap-desc">Good ideas don't always get funded. I write honest ROI estimates and clear risk analysis
+              — the kind that make decisions easier, not harder.</p>
+          </div>
+        </div>
+        <div class="ap-step"><span class="ap-n">03</span>
+          <div>
+            <div class="ap-title">Ship with the team</div>
+            <p class="ap-desc">Specs engineers want to read, design context that unlocks creativity, blockers cleared
+              before they become fires. Delivery is a team sport.</p>
+          </div>
+        </div>
+        <div class="ap-step"><span class="ap-n">04</span>
+          <div>
+            <div class="ap-title">Learn and share</div>
+            <p class="ap-desc">Every launch is a learning opportunity. I document what worked and what didn't so the
+              next team doesn't start from zero.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ══ -->
+  <section class="sec">
+    <div class="sec-label">Skills</div>
+    <div class="skills-wrap">
+      <div class="au">
+        <p style="font-size:16px;font-weight:400;letter-spacing:-0.01em;color:var(--ink)">What I'm good at</p>
+        <p class="skills-copy">From SQL to Figma to stakeholder presentations — I cover more ground than a typical PM
+          because I've built, invested, and shipped.</p>
+      </div>
+      <div class="skills-rows">
+        <div class="sk"><span class="sk-name">Product discovery & user research</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">Roadmapping & prioritisation</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">Data analysis · SQL · Tableau · Power BI</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">A/B testing & experimentation</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">Figma · UX design</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">Python · R · ReactJS</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot"></div>
+            <div class="sk-dot"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">Agile · Scrum · Jira (CSPO certified)</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+          </div>
+        </div>
+        <div class="sk"><span class="sk-name">Venture capital & due diligence</span>
+          <div class="sk-dots">
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot on"></div>
+            <div class="sk-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══ -->
+  <section class="sec" id="about">
+    <div class="sec-label">About</div>
+    <div class="about-wrap">
+      <div>
+        <h2 class="about-h au">Engineer.<br />Founder.<br /><em>Product manager.</em></h2>
+        <a href="/mnt/user-data/uploads/Ajay_Swaminathan_-_Resume_.pdf" class="about-resume au"
+          style="transition-delay:.15s" target="_blank">Download resume ↓</a>
+      </div>
+      <div>
+        <p class="about-copy au">
+          I'm Ajay Vaidhyanathan Swaminathan — most people call me AJ. I started as an engineer, founded a mobile
+          product studio in Chennai, moved into venture capital in Munich, and landed firmly in product. That path gives
+          me something most PMs don't have: I understand how founders think, how investors evaluate bets, and how
+          engineers actually build.
+          <br /><br />
+          Most recently at <strong>DreamDriven</strong> (B2C venture builder), with prior experience at <strong>Mountain
+            Alliance</strong> (PE/VC) and <strong>Colayer</strong>. Before that, I founded <strong>Fluxdart
+            Technology</strong>, where I owned the full product lifecycle for 5+ mobile apps. Based in <strong>Munich,
+            Germany</strong> — open to hybrid or remote roles across Europe.
+        </p>
+        <div class="about-traits">
+          <div class="tr"><span class="tr-n">01</span>
+            <p><strong>I've been the founder.</strong> I know what it feels like to own the whole product — discovery,
+              trade-offs, and shipping under pressure. I bring that ownership into every PM role.</p>
+          </div>
+          <div class="tr"><span class="tr-n">02</span>
+            <p><strong>I've evaluated investments.</strong> Time at Mountain Alliance means I think in unit economics,
+              market sizing, and competitive dynamics — not just user stories.</p>
+          </div>
+          <div class="tr"><span class="tr-n">03</span>
+            <p><strong>I build and I analyse.</strong> SQL, Python, Figma, ReactJS — I can work directly with data and
+              design, not just manage people who do.</p>
+          </div>
+          <div class="tr"><span class="tr-n">04</span>
+            <p><strong>I work in two languages.</strong> English and German (B2) — comfortable in international and
+              European teams.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section class="sec" id="contact">
+    <div class="sec-label">Get in touch</div>
+    <div class="contact-wrap">
+      <div>
+        <h2 class="contact-h">
+          <span class="cw ac"><span class="aci">Let's build</span></span>
+          <span class="cw ac" style="transition-delay:.08s"><em class="aci">something great.</em></span>
+        </h2>
+      </div>
+      <div class="au">
+        <div class="c-avail"><span class="c-dot"></span>Open to full-time PM roles · Munich & remote</div>
+        <a href="mailto:hello@ajayvaidhyanathan.com" class="contact-email">hello@ajayvaidhyanathan.com</a>
+        <p class="contact-note">I read every message personally and reply within a day. If you're building something
+          interesting in Europe and need a PM who can think like a founder — let's talk.</p>
+        <a href="mailto:hello@ajayvaidhyanathan.com" class="contact-cta">Send a message →</a>
+        <div class="contact-links">
+          <a href="#" class="cl">LinkedIn</a>
+          <a href="#" class="cl">Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="foot-l">Ajay Swaminathan · Munich, Germany</span>
+    <span class="foot-r">© 2025 · hello@ajayvaidhyanathan.com</span>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
