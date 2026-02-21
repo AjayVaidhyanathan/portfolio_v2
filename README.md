@@ -4,7 +4,7 @@ A personal portfolio website showcasing my case studies and professional experie
 
 ## Project Structure
 
-- `portfolio-v2.html`: Main portfolio page.
+- `index.html`: Main portfolio page.
 - `case-*.html`: Detailed case studies for various projects.
 - `meet-widget.html`: Interactive meeting widget demo.
 - `css/`: Stylesheets for the website and components.
@@ -18,4 +18,4 @@ A personal portfolio website showcasing my case studies and professional experie
 
 ## How to Run
 
-Simply open `portfolio-v2.html` in any modern web browser.
+Simply open `index.html` in any modern web browser.
