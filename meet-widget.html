@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajay Swaminathan — Live Portfolio Call</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/meet-widget.css" />
+
+</head>
+
+<body>
+
+  <!-- ── JOINING SCREEN ── -->
+  <div class="join-screen" id="joinScreen">
+    <div class="join-logo">Portfolio Call</div>
+    <h1 class="join-title">You're about to join a call with<br /><span>Ajay Swaminathan</span></h1>
+    <div class="join-preview" style="position:relative">
+      😊
+      <div class="join-preview-label">Ajay Swaminathan · PM</div>
+    </div>
+    <p class="join-info">Ajay is already in the call.<br />Ask anything — about work, projects, or how to build things.
+    </p>
+    <button class="join-btn" onclick="joinCall()">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+      </svg>
+      Join Now
+    </button>
+  </div>
+
+  <!-- ── MAIN CALL UI ── -->
+  <div class="call" id="callUI" style="opacity:0;transition:opacity .6s">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="rec-dot"></div>
+        <span class="call-title">Portfolio Interview — Ajay Swaminathan</span>
+        <span class="call-timer" id="callTimer">00:00</span>
+      </div>
+      <div class="topbar-right">
+        <span class="top-pill">🔒 End-to-end encrypted</span>
+        <div class="participants-count">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+          </svg>
+          2
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO + SIDE PANEL -->
+    <div class="video-area">
+
+      <!-- MAIN TILE -->
+      <div class="main-tile" id="mainTile">
+        <div class="main-video-placeholder" id="videoPlaceholder">
+          <div class="main-avatar" id="mainAvatar">😊</div>
+          <span style="font-size:0.8rem;color:var(--gray)">Ajay Swaminathan · Product Manager</span>
+        </div>
+
+        <!-- Real videos go here — set src to your Wav2Lip generated mp4s -->
+        <video class="main-video" id="vid-intro" src="" playsinline></video>
+        <video class="main-video" id="vid-approach" src="" playsinline></video>
+        <video class="main-video" id="vid-casestudy" src="" playsinline></video>
+        <video class="main-video" id="vid-whyme" src="" playsinline></video>
+        <video class="main-video" id="vid-building" src="" playsinline></video>
+
+        <div class="name-tag">
+          <span class="name-tag-dot"></span>
+          Ajay Swaminathan
+        </div>
+        <div class="hd-badge">HD</div>
+        <div class="network">
+          <div class="network-bar"></div>
+          <div class="network-bar"></div>
+          <div class="network-bar"></div>
+          <div class="network-bar"></div>
+        </div>
+
+        <!-- Self view pip -->
+        <div class="self-view">
+          👤
+          <div class="self-view-label">You</div>
+        </div>
+      </div>
+
+      <!-- SIDE PANEL -->
+      <div class="side-panel">
+        <div class="side-tabs">
+          <button class="side-tab active" onclick="switchTab('chat', this)">Chat</button>
+          <button class="side-tab" onclick="switchTab('topics', this)">Topics</button>
+        </div>
+
+        <!-- CHAT -->
+        <div class="chat-messages" id="chatMessages">
+          <div class="msg them">
+            <span class="msg-sender">Ajay Swaminathan</span>
+            <div class="msg-bubble">Hey! 👋 Great to meet you. Feel free to ask me anything — about my work, projects,
+              or how I think about product.</div>
+            <span class="msg-time">Just now</span>
+          </div>
+        </div>
+
+        <!-- TOPICS -->
+        <div class="topics-panel" id="topicsPanel">
+          <p style="font-size:0.72rem;color:var(--gray);margin-bottom:4px">Click a topic to hear Alex talk about it</p>
+          <div class="topic-item active-topic" onclick="playTopic('intro', this)">
+            <span class="topic-emoji">👋</span>
+            <div class="topic-text">
+              <div class="topic-name">Introduction</div>
+              <div class="topic-desc">Who I am and what I do</div>
+            </div>
+            <span class="topic-playing">Playing</span>
+          </div>
+          <div class="topic-item" onclick="playTopic('approach', this)">
+            <span class="topic-emoji">🧭</span>
+            <div class="topic-text">
+              <div class="topic-name">How I work</div>
+              <div class="topic-desc">My PM process and philosophy</div>
+            </div>
+            <span class="topic-playing">Playing</span>
+          </div>
+          <div class="topic-item" onclick="playTopic('casestudy', this)">
+            <span class="topic-emoji">📊</span>
+            <div class="topic-text">
+              <div class="topic-name">Case Study</div>
+              <div class="topic-desc">A product story I'm proud of</div>
+            </div>
+            <span class="topic-playing">Playing</span>
+          </div>
+          <div class="topic-item" onclick="playTopic('whyme', this)">
+            <span class="topic-emoji">✦</span>
+            <div class="topic-text">
+              <div class="topic-name">Why hire me</div>
+              <div class="topic-desc">What I bring to a team</div>
+            </div>
+            <span class="topic-playing">Playing</span>
+          </div>
+          <div class="topic-item" onclick="playTopic('building', this)">
+            <span class="topic-emoji">🔨</span>
+            <div class="topic-text">
+              <div class="topic-name">What I'm building</div>
+              <div class="topic-desc">My side projects and ideas</div>
+            </div>
+            <span class="topic-playing">Playing</span>
+          </div>
+        </div>
+
+        <!-- TYPING INDICATOR -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+          <span class="typing-label">Ajay is typing...</span>
+        </div>
+
+        <!-- INPUT -->
+        <div class="chat-input-wrap">
+          <textarea class="chat-input" id="chatInput" placeholder="Message Ajay..." rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+
+          <button class="chat-send" onclick="sendMessage()">
+            <svg viewBox="0 0 24 24">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM CONTROLS -->
+    <div class="controls" id="controls">
+      <div class="ctrl-group">
+        <!-- Mic -->
+        <button class="ctrl-btn off" id="micBtn" onclick="toggleCtrl(this, 'Mic muted', 'Mic on')" title="Mute">
+          <div class="ctrl-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z" />
+            </svg>
+          </div>
+          <span class="ctrl-label">Mic</span>
+        </button>
+        <!-- Camera -->
+        <button class="ctrl-btn off" id="camBtn" onclick="toggleCtrl(this, 'Camera off', 'Camera on')" title="Camera">
+          <div class="ctrl-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+            </svg>
+          </div>
+          <span class="ctrl-label">Camera</span>
+        </button>
+      </div>
+
+      <div class="ctrl-divider"></div>
+
+      <div class="ctrl-group">
+        <!-- Reactions -->
+        <button class="ctrl-btn off" onclick="sendReaction('👏')" title="Applaud">
+          <div class="ctrl-icon"><svg viewBox="0 0 24 24">
+              <path
+                d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+            </svg></div>
+          <span class="ctrl-label">React</span>
+        </button>
+        <!-- Chat toggle -->
+        <button class="ctrl-btn off active-ctrl" id="chatToggleBtn" onclick="toggleChat()" title="Chat">
+          <div class="ctrl-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+            </svg>
+          </div>
+          <span class="ctrl-label">Chat</span>
+        </button>
+        <!-- Topics -->
+        <button class="ctrl-btn off" id="topicsToggleBtn" onclick="toggleTopics()" title="Topics">
+          <div class="ctrl-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+            </svg>
+          </div>
+          <span class="ctrl-label">Topics</span>
+        </button>
+      </div>
+
+      <div class="ctrl-divider"></div>
+
+      <!-- End call -->
+      <button class="end-call" onclick="endCall()">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+        </svg>
+        Leave call
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/meet-widget.js"></script>
+</body>
+
+</html>

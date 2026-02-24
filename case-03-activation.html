@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0→1: The feature that became the #1 activation driver — Ajay Swaminathan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/case-study.css" />
+</head>
+
+<body>
+  <div id="cur"></div>
+  <div id="curR"></div>
+  <nav>
+    <a href="index.html" class="nav-back">← Back to work</a>
+    <a href="index.html" class="nav-name">Ajay Swaminathan</a>
+    <a href="index.html#contact" class="nav-hire">Hire me</a>
+  </nav>
+
+  <section class="cs-hero">
+    <div>
+      <div class="cs-meta">
+        <span class="cs-type">Product · Consumer Mobile</span>
+        <span class="cs-num">03 / 06</span>
+      </div>
+      <h1 class="cs-h">0→1: The feature that became the #1 activation driver</h1>
+      <p class="cs-lead">Users were signing up but not sticking. An 8-week 0→1 build that turned activation from a
+        problem into a strength.</p>
+    </div>
+    <div class="cs-stats">
+      <div class="cs-stat"><span class="cs-stat-n">62%</span><span class="cs-stat-l">Of new user activation</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">8 wk</span><span class="cs-stat-l">Concept to ship</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">6</span><span class="cs-stat-l">Cross-functional team size</span>
+      </div>
+      <div class="cs-stat"><span class="cs-stat-n">#1</span><span class="cs-stat-l">Activation driver</span></div>
+    </div>
+  </section>
+
+  <div class="cs-body">
+
+    <div class="cs-section">
+      <div class="cs-section-label">The situation</div>
+
+      <p>The app had healthy top-of-funnel numbers. Downloads were strong. Sign-ups were converting at a reasonable
+        rate. But the D7 retention curve told a different story — most users who signed up weren't coming back after day
+        one.</p>
+      <p>The core hypothesis from the growth team: users weren't finding their "aha moment" fast enough. But nobody had
+        tested what that moment should be.</p>
+    </div>
+    <div class="cs-section">
+      <div class="cs-section-label">My role</div>
+
+      <p>I was brought in to own the 0→1 feature build from problem definition to launch. Team of 6: myself, 2
+        engineers, 1 designer, 1 data analyst, and 1 QA. Timeline: 8 weeks to an MVP that we could measure against.</p>
+    </div>
+    <div class="cs-section">
+      <div class="cs-section-label">Discovery</div>
+
+      <p>I started with cohort analysis. Users who returned on Day 7 had one behaviour in common in their first session:
+        they'd completed a specific personalisation step that the majority of users skipped. The skip rate was 73%.</p>
+      <p>Qualitative interviews confirmed it — users who skipped it didn't understand why it mattered. The step felt
+        optional and abstract. For users who completed it, the app immediately felt relevant to them.</p>
+      <div class="callout">
+        <p><strong>The insight:</strong> The aha moment already existed in the product. The problem was that we were
+          making it too easy to skip. The solution wasn't to build something new — it was to make the existing value
+          unavoidable.</p>
+      </div>
+    </div>
+    <div class="cs-section">
+      <div class="cs-section-label">What we built</div>
+
+      <p>A personalisation feature that surfaced during onboarding and made the app's value proposition immediately
+        personal. Key design decisions:</p>
+      <div class="cs-list">
+        <div class="cs-list-item"><span class="cs-list-n">01</span>
+          <div><strong>Made it feel like setup, not a survey.</strong> Every question had an immediate visible effect on
+            the app. You could see it adapting in real time.</div>
+        </div>
+        <div class="cs-list-item"><span class="cs-list-n">02</span>
+          <div><strong>Set a clear completion signal.</strong> Users knew exactly how many steps remained and what
+            they'd unlock by finishing.</div>
+        </div>
+        <div class="cs-list-item"><span class="cs-list-n">03</span>
+          <div><strong>Made skipping harder, not impossible.</strong> You could still skip, but it required an active
+            choice rather than a passive scroll-past.</div>
+        </div>
+        <div class="cs-list-item"><span class="cs-list-n">04</span>
+          <div><strong>Preserved the data.</strong> Personalisation choices carried through the entire app experience,
+            so the effort felt worth it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="asset-block">
+      <div class="asset-label">Figma design — Onboarding flow</div>
+      <div class="figma-wrap">
+        <iframe src="https://www.figma.com/embed?embed_host=share&url=YOUR_FIGMA_SHARE_URL" allowfullscreen
+          loading="lazy">
+        </iframe>
+        <div class="asset-placeholder">
+          <span class="placeholder-icon">⬡</span>
+          <p class="placeholder-title">Figma design</p>
+          <p class="placeholder-sub">
+            In Figma: Share → Copy link → paste into <code>src</code> above.<br />
+            Change <code>embed_host=share&amp;url=</code> to your link.
+          </p>
+          <a href="YOUR_FIGMA_SHARE_URL" class="placeholder-link" target="_blank">Open in Figma ↗</a>
+        </div>
+      </div>
+      <p class="asset-caption">The personalisation onboarding flow. Key screens: entry prompt, real-time preview as user
+        makes choices, and the completion state showing their personalised home view.</p>
+    </div>
+    <div class="cs-section">
+      <div class="cs-section-label">Delivery</div>
+
+      <p>8 weeks is tight for a 0→1 feature. I kept scope ruthlessly narrow: we were solving one problem (low
+        personalisation completion during onboarding) and measuring one thing (D7 retention for users who completed the
+        new flow vs. those who didn't).</p>
+      <p>We ran a 3-week beta with 15% of new sign-ups before full rollout. The D7 retention lift was significant enough
+        to justify full release within the original timeline.</p>
+    </div>
+    <div class="cs-section">
+      <div class="cs-section-label">The outcome</div>
+
+      <div class="outcome-grid">
+        <div class="outcome-cell"><span class="outcome-n">62%</span><span class="outcome-l">New user activation</span>
+          <p class="outcome-desc">Feature now drives the majority of successful onboarding completions.</p>
+        </div>
+        <div class="outcome-cell"><span class="outcome-n">+34%</span><span class="outcome-l">D7 retention</span>
+          <p class="outcome-desc">For users who completed the personalisation flow vs. control.</p>
+        </div>
+        <div class="outcome-cell"><span class="outcome-n">8 wk</span><span class="outcome-l">Concept to ship</span>
+          <p class="outcome-desc">Including 3-week beta and full rollout.</p>
+        </div>
+      </div>
+    </div>
+    <div class="cs-section">
+      <div class="cs-section-label">What I learned</div>
+
+      <p>The most common 0→1 mistake is building something new when the value you need is already there. In this case,
+        the aha moment existed — we just weren't surfacing it well. Discovery before building saved us from building the
+        wrong thing.</p>
+      <p>Keeping scope narrow also mattered. An 8-week timeline forces good prioritisation. We cut three ideas that were
+        interesting but not essential, and the feature is better for it.</p>
+    </div>
+  </div>
+
+  <div class="cs-next">
+    <a href="index.html" class="cs-back-link">← All work</a>
+    <div>
+      <div class="cs-next-label">Next case study</div>
+      <a href="case-04-apac.html" class="cs-next-title">APAC expansion: the market analysis that got a yes →</a>
+    </div>
+  </div>
+
+  <footer>
+    <span class="foot-l">Ajay Swaminathan — Product Manager</span>
+    <span class="foot-r">© 2025</span>
+  </footer>
+  <script src="js/case-study.js"></script>
+</body>
+
+</html>
