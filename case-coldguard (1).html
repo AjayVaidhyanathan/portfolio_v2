@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ColdGuard – IoT Cold Chain Monitor · Ajay Swaminathan</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Epilogue:wght@300;400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0D1B2A;--navy2:#162336;--blue:#1E3A5F;
+  --sand:#E8D5B0;--sand2:#D4BC94;
+  --cream:#F5F2EC;--cream2:#EDE8DF;
+  --ink:#0D1B2A;--ink2:#3D5166;--ink3:#7A90A4;
+  --serif:'Instrument Serif',Georgia,serif;
+  --body:'Epilogue',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);--ease2:cubic-bezier(.34,1.56,.64,1);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:8px;height:8px;background:var(--sand);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#curR{position:fixed;width:36px;height:36px;border:1.5px solid rgba(232,213,176,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .45s var(--ease),height .45s var(--ease),opacity .3s;}
+body:not(:hover) #curR{opacity:0;}
+body.lh #cur{width:12px;height:12px;background:var(--sand2);}
+body.lh #curR{width:56px;height:56px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,27,42,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-back{font-family:var(--body);font-size:13px;font-weight:500;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;transition:color .2s;}
+.nav-back:hover{color:#fff;}
+.nav-back::before{content:'←';transition:transform .2s var(--ease);}
+.nav-back:hover::before{transform:translateX(-3px);}
+.nav-logo{font-family:var(--serif);font-size:22px;color:#fff;text-decoration:none;letter-spacing:-0.02em;}
+.nav-logo em{font-style:italic;color:var(--sand);}
+.nav-cta{font-family:var(--body);font-size:13px;font-weight:600;background:var(--sand);color:var(--navy);padding:9px 22px;border-radius:3px;text-decoration:none;transition:background .2s,transform .15s var(--ease2);}
+.nav-cta:hover{background:var(--sand2);transform:translateY(-1px);}
+
+/* CASE HERO */
+.cs-hero{background:var(--navy);padding:120px 56px 80px;position:relative;overflow:hidden;}
+.cs-hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:38%;background:var(--blue);clip-path:polygon(20% 0,100% 0,100% 100%,0% 100%);opacity:0.5;}
+.cs-hero::before{content:'';position:absolute;left:56px;right:56px;bottom:0;height:1px;background:rgba(232,213,176,0.12);}
+.cs-hero-inner{position:relative;z-index:1;max-width:900px;}
+.cs-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:40px;opacity:0;animation:fadeUp .6s .1s var(--ease) forwards;}
+.cs-eyebrow-tag{font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--sand);opacity:0.7;}
+.cs-eyebrow-sep{width:1px;height:14px;background:rgba(232,213,176,0.25);}
+.cs-eyebrow-num{font-family:var(--serif);font-size:13px;color:rgba(232,213,176,0.4);}
+.cs-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.cs-tag{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(232,213,176,0.55);border:1px solid rgba(232,213,176,0.18);padding:4px 12px;border-radius:2px;}
+.cs-hero-h{font-family:var(--serif);font-size:clamp(40px,6vw,84px);font-weight:400;line-height:0.93;letter-spacing:-0.035em;color:#fff;margin-bottom:32px;opacity:0;animation:fadeUp .8s .25s var(--ease) forwards;}
+.cs-hero-h em{font-style:italic;color:var(--sand);}
+.cs-hero-sub{font-size:17px;line-height:1.75;color:rgba(255,255,255,0.5);max-width:620px;font-weight:300;margin-bottom:56px;opacity:0;animation:fadeUp .7s .42s var(--ease) forwards;}
+.cs-hero-sub strong{color:rgba(255,255,255,0.82);font-weight:500;}
+.cs-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;opacity:0;animation:fadeUp .7s .6s var(--ease) forwards;}
+.cs-stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);padding:28px 24px;}
+.cs-stat-n{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:400;color:#fff;letter-spacing:-0.03em;display:block;line-height:1;margin-bottom:8px;}
+.cs-stat-n em{color:var(--sand);font-style:normal;}
+.cs-stat-l{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+
+/* CONTENT BODY */
+.cs-body{max-width:1280px;margin:0 auto;padding:0 56px;}
+
+/* SECTION */
+.cs-sec{padding:80px 0;border-bottom:1px solid var(--cream2);}
+.cs-sec:last-child{border-bottom:none;}
+.cs-sec-layout{display:grid;grid-template-columns:240px 1fr;gap:64px;align-items:start;}
+.cs-sec-label{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink3);padding-top:6px;position:sticky;top:88px;}
+.cs-sec-label span{display:block;font-family:var(--serif);font-size:32px;font-weight:400;letter-spacing:-0.04em;color:var(--cream2);line-height:1;margin-bottom:8px;}
+.cs-sec-content{}
+.cs-h2{font-family:var(--serif);font-size:clamp(28px,3vw,42px);font-weight:400;letter-spacing:-0.03em;line-height:1.05;color:var(--ink);margin-bottom:24px;}
+.cs-h2 em{font-style:italic;color:var(--blue);}
+.cs-h3{font-family:var(--serif);font-size:clamp(20px,2vw,26px);font-weight:400;letter-spacing:-0.02em;line-height:1.15;color:var(--ink);margin-bottom:14px;margin-top:40px;}
+.cs-p{font-size:15px;line-height:1.85;color:var(--ink2);font-weight:300;margin-bottom:20px;}
+.cs-p strong{color:var(--ink);font-weight:600;}
+.cs-p:last-child{margin-bottom:0;}
+
+/* PULL QUOTE */
+.cs-quote{border-left:3px solid var(--sand);padding:20px 28px;margin:36px 0;background:var(--cream2);border-radius:0 4px 4px 0;}
+.cs-quote p{font-family:var(--serif);font-size:clamp(18px,2vw,22px);font-weight:400;font-style:italic;line-height:1.5;color:var(--ink);}
+
+/* PAIN GRID */
+.cs-pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:32px 0;}
+.cs-pain-cell{background:var(--navy);padding:28px 24px;}
+.cs-pain-cell:nth-child(odd){background:var(--navy2);}
+.cs-pain-n{font-family:var(--serif);font-size:36px;font-weight:400;color:var(--sand);letter-spacing:-0.04em;line-height:1;display:block;margin-bottom:6px;}
+.cs-pain-l{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:12px;display:block;}
+.cs-pain-desc{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65;font-weight:300;}
+.cs-pain-desc strong{color:rgba(255,255,255,0.85);font-weight:500;}
+
+/* NUMBERED LIST */
+.cs-steps{display:flex;flex-direction:column;gap:2px;margin:24px 0;}
+.cs-step{display:grid;grid-template-columns:52px 1fr;gap:20px;background:var(--cream2);padding:28px 24px;align-items:start;transition:background .2s;}
+.cs-step:hover{background:#e2ddd5;}
+.cs-step-n{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--cream);letter-spacing:-0.04em;line-height:1;padding-top:2px;}
+.cs-step-body{}
+.cs-step-title{font-size:14px;font-weight:700;letter-spacing:0.01em;color:var(--ink);margin-bottom:8px;}
+.cs-step-desc{font-size:13px;line-height:1.7;color:var(--ink2);font-weight:300;}
+.cs-step-desc strong{color:var(--ink);font-weight:600;}
+
+/* TECH TABLE */
+.cs-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px;}
+.cs-table th{font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);padding:12px 16px;border-bottom:2px solid var(--ink);text-align:left;}
+.cs-table td{padding:16px;border-bottom:1px solid var(--cream2);vertical-align:top;line-height:1.6;color:var(--ink2);font-weight:300;}
+.cs-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;}
+.cs-table td:nth-child(2){font-family:var(--body);color:var(--blue);font-weight:500;font-size:12px;}
+.cs-table tr:hover td{background:var(--cream2);}
+
+/* CODE BLOCK */
+.cs-code{background:var(--navy);border-radius:4px;padding:28px 32px;margin:20px 0;overflow-x:auto;}
+.cs-code pre{font-family:'DM Mono',monospace;font-size:12px;line-height:1.75;color:rgba(255,255,255,0.7);}
+.cs-code .cm{color:rgba(232,213,176,0.4);}
+.cs-code .ck{color:#93c5fd;}
+.cs-code .cs2{color:#86efac;}
+.cs-code .cn{color:var(--sand);}
+
+/* BEFORE/AFTER */
+.cs-ba{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:24px 0;}
+.cs-ba-col{padding:28px 24px;}
+.cs-ba-col:first-child{background:var(--navy2);}
+.cs-ba-col:last-child{background:var(--blue);}
+.cs-ba-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:20px;display:block;}
+.cs-ba-col:first-child .cs-ba-label{color:rgba(232,213,176,0.4);}
+.cs-ba-col:last-child .cs-ba-label{color:var(--sand);}
+.cs-ba-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;font-size:13px;line-height:1.6;font-weight:300;}
+.cs-ba-col:first-child .cs-ba-item{color:rgba(255,255,255,0.45);}
+.cs-ba-col:last-child .cs-ba-item{color:rgba(255,255,255,0.75);}
+.cs-ba-item::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px;}
+.cs-ba-col:first-child .cs-ba-item::before{background:rgba(255,255,255,0.2);}
+.cs-ba-col:last-child .cs-ba-item::before{background:var(--sand);}
+
+/* OUTCOMES */
+.cs-outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-outcome{background:var(--navy);padding:32px 24px;}
+.cs-outcome:nth-child(even){background:var(--blue);}
+.cs-outcome-n{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--sand);letter-spacing:-0.04em;line-height:1;display:block;margin-bottom:8px;}
+.cs-outcome-l{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-bottom:12px;}
+.cs-outcome-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.65;font-weight:300;}
+
+/* ARCHITECTURE */
+.cs-arch{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin:24px 0;}
+.cs-arch-layer{background:var(--cream2);padding:24px 20px;}
+.cs-arch-layer:nth-child(2){background:var(--navy2);}
+.cs-arch-layer:nth-child(3){background:var(--blue);}
+.cs-arch-layer:nth-child(4){background:var(--navy);}
+.cs-arch-label{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;display:block;}
+.cs-arch-layer:nth-child(1) .cs-arch-label{color:var(--ink3);}
+.cs-arch-layer:nth-child(n+2) .cs-arch-label{color:rgba(232,213,176,0.5);}
+.cs-arch-item{font-size:12px;line-height:1.6;margin-bottom:8px;font-weight:300;}
+.cs-arch-layer:nth-child(1) .cs-arch-item{color:var(--ink2);}
+.cs-arch-layer:nth-child(n+2) .cs-arch-item{color:rgba(255,255,255,0.55);}
+.cs-arch-item strong{font-weight:600;}
+.cs-arch-layer:nth-child(1) .cs-arch-item strong{color:var(--ink);}
+.cs-arch-layer:nth-child(n+2) .cs-arch-item strong{color:rgba(255,255,255,0.9);}
+
+/* PRODUCT CARDS */
+.cs-products{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-product{background:var(--navy);padding:32px 24px;position:relative;overflow:hidden;}
+.cs-product::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sand);}
+.cs-product-phase{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(232,213,176,0.45);margin-bottom:16px;display:block;}
+.cs-product-name{font-family:var(--serif);font-size:22px;font-weight:400;color:#fff;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1;}
+.cs-product-ing{font-size:12px;color:var(--sand);font-weight:500;margin-bottom:16px;line-height:1.5;}
+.cs-product-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.65;font-weight:300;}
+
+/* REFLECTION */
+.cs-reflection{background:var(--navy);padding:56px;position:relative;overflow:hidden;margin:0 0 0;}
+.cs-reflection::before{content:'"';font-family:var(--serif);font-size:240px;color:rgba(232,213,176,0.04);position:absolute;top:-40px;left:24px;line-height:1;pointer-events:none;}
+.cs-reflection-label{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sand);opacity:0.55;margin-bottom:32px;display:block;position:relative;z-index:1;}
+.cs-reflection-items{display:flex;flex-direction:column;gap:0;position:relative;z-index:1;}
+.cs-ref-item{padding:28px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.cs-ref-item:first-child{border-top:1px solid rgba(255,255,255,0.06);}
+.cs-ref-item:last-child{border-bottom:none;}
+.cs-ref-n{font-family:var(--serif);font-size:13px;font-weight:400;color:rgba(232,213,176,0.3);margin-bottom:10px;display:block;}
+.cs-ref-text{font-size:15px;line-height:1.8;color:rgba(255,255,255,0.55);font-weight:300;}
+.cs-ref-text strong{color:#fff;font-weight:500;}
+
+/* NEXT CASE / FOOTER */
+.cs-nav-footer{background:var(--cream2);padding:64px 56px;display:flex;justify-content:space-between;align-items:center;}
+.cs-nav-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:block;}
+.cs-nav-title{font-family:var(--serif);font-size:clamp(20px,2.5vw,30px);font-weight:400;letter-spacing:-0.02em;color:var(--ink);}
+.cs-nav-link{display:flex;align-items:center;gap:10px;text-decoration:none;transition:gap .2s var(--ease);}
+.cs-nav-link:hover{gap:16px;}
+.cs-nav-link:hover .cs-nav-title{color:var(--blue);}
+.cs-nav-arrow{font-family:var(--serif);font-size:24px;color:var(--ink3);}
+
+/* UTILS */
+.au{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease);}
+.au.in{opacity:1;transform:translateY(0);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .cs-hero{padding:100px 28px 56px;}
+  .cs-body{padding:0 28px;}
+  .cs-sec-layout{grid-template-columns:1fr;gap:24px;}
+  .cs-sec-label{position:static;}
+  .cs-stats{grid-template-columns:1fr 1fr;}
+  .cs-pain-grid,.cs-ba,.cs-products{grid-template-columns:1fr;}
+  .cs-outcomes{grid-template-columns:1fr 1fr;}
+  .cs-arch{grid-template-columns:1fr 1fr;}
+  .cs-nav-footer{flex-direction:column;gap:32px;align-items:flex-start;padding:48px 28px;}
+  .cs-reflection{padding:40px 28px;}
+}
+@media(max-width:600px){
+  .cs-stats{grid-template-columns:1fr 1fr;}
+  .cs-outcomes{grid-template-columns:1fr;}
+  .cs-arch{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="curR"></div>
+
+<nav>
+  <a href="portfolio-v2.html" class="nav-back">Back to work</a>
+  <a href="portfolio-v2.html" class="nav-logo">AJ<em>.</em></a>
+  <a href="mailto:hello@ajayvaidhyanathan.com" class="nav-cta">Hire me</a>
+</nav>
+
+<!-- HERO -->
+<div class="cs-hero">
+  <div class="cs-hero-inner">
+    <div class="cs-eyebrow">
+      <span class="cs-eyebrow-tag">IoT · Operations</span>
+      <span class="cs-eyebrow-sep"></span>
+      <span class="cs-eyebrow-num">Case 09</span>
+      <span class="cs-eyebrow-sep"></span>
+      <div class="cs-tags">
+        <span class="cs-tag">0 to 1</span>
+        <span class="cs-tag">B2C App</span>
+        <span class="cs-tag">IoT</span>
+        <span class="cs-tag">Compliance</span>
+      </div>
+    </div>
+    <h1 class="cs-hero-h">Turning a cold chain<br/>from a liability into<br/><em>a monitored asset</em></h1>
+    <p class="cs-hero-sub">Priya Foods managed <strong>₹42 lakhs of perishable stock</strong> using manual temperature logs and a generator that took 15 minutes to start. Two incidents in 18 months cost them ₹8.9 lakhs. I led the product definition of ColdGuard — an IoT system that cut failure response time from minutes to seconds.</p>
+    <div class="cs-stats">
+      <div class="cs-stat"><span class="cs-stat-n"><em>₹21L+</em></span><span class="cs-stat-l">Annual loss before</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">&lt; 90s</span><span class="cs-stat-l">Alert to technician</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">0</span><span class="cs-stat-l">Manual log entries</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">7</span><span class="cs-stat-l">Units monitored 24/7</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-body">
+
+  <!-- THE CLIENT -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>01</span>The client</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Priya Foods Distribution <em>Pvt. Ltd.</em></h2>
+        <p class="cs-p">A fictional regional distributor of meat, poultry, seafood, and frozen processed foods based in Madurai, Tamil Nadu. They supply 140+ hotels, supermarkets, and restaurants across southern Tamil Nadu from a 1,200 m² warehouse operating 24 hours a day.</p>
+        <p class="cs-p">At any given time, approximately <strong>₹42 lakhs of perishable stock</strong> sits across 4 refrigerated rooms (2°C–8°C) and 2 deep freezers (−18°C to −22°C). Every degree of temperature exceedance is a direct financial risk. The margin between "safe" and "condemned" is measured in minutes, not hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE SITUATION -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>02</span>The situation</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Three assumptions that were <em>quietly failing</em></h2>
+        <p class="cs-p">Cold chain operations are unforgiving. A refrigeration failure at 2 AM that goes undetected until the morning inspection is not a minor inconvenience — it is stock destruction. Priya Foods had built their operations around three assumptions: that someone would notice a failure quickly, that two temperature logs a day was enough for compliance, and that staff awareness alone would keep doors properly sealed.</p>
+        <div class="cs-pain-grid">
+          <div class="cs-pain-cell">
+            <span class="cs-pain-n">8–15 min</span>
+            <span class="cs-pain-l">Power recovery time</span>
+            <p class="cs-pain-desc">From grid failure to generator running — someone had to notice, walk to the generator room, and start it manually. <strong>Deep freezers begin losing product integrity after 20 minutes.</strong></p>
+          </div>
+          <div class="cs-pain-cell">
+            <span class="cs-pain-n">2×/day</span>
+            <span class="cs-pain-l">Compliance log frequency</span>
+            <p class="cs-pain-desc">Temperature recorded manually at 6 AM and 6 PM. Everything between those readings was <strong>invisible to the operations team and to FSSAI on audit.</strong></p>
+          </div>
+          <div class="cs-pain-cell">
+            <span class="cs-pain-n">2 in 18mo</span>
+            <span class="cs-pain-l">Confirmed major incidents</span>
+            <p class="cs-pain-desc">One night-shift power failure undetected for 40 minutes. One silent compressor failure caught only at morning inspection. <strong>Combined loss: ₹8.9 lakhs in condemned stock.</strong></p>
+          </div>
+          <div class="cs-pain-cell">
+            <span class="cs-pain-n">~15/mo</span>
+            <span class="cs-pain-l">Door-ajar events</span>
+            <p class="cs-pain-desc">Estimated from post-incident analysis. Several ran 2–3 hours during night shift. A 2 cm gap on a refrigerated room door raises internal temperature <strong>~1°C every 8–10 minutes.</strong></p>
+          </div>
+        </div>
+        <div class="cs-quote">
+          <p>"We knew something had gone wrong when the morning shift arrived. By then the damage was already done. There was no way to know sooner."</p>
+        </div>
+        <p class="cs-p">The real issue was that the operation had no continuous signal. Temperature data existed in a notebook twice a day. A power failure was only detectable if someone happened to notice the lights go out. The cold chain — the single most critical thing keeping the business running — was effectively unmonitored between manual checks.</p>
+        <p class="cs-p">Total annual loss before ColdGuard was estimated at <strong>₹21+ lakhs</strong> across power events, door incidents, compliance admin, and penalty risk — modelled from degradation curves at Tamil Nadu ambient conditions (~30°C outside), with ₹10,000–₹12,000 loss per minute in a full deep-freeze failure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE SOLUTION -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>03</span>The solution</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Close every gap in the <em>continuous signal</em></h2>
+        <p class="cs-p">ColdGuard is an IoT monitoring and alerting system built in partnership with NexSense IoT Solutions, a Chennai-based industrial IoT integrator. It monitors temperature, humidity, door seal status, and three-phase power on every unit, every 60 seconds, and gets an alert to the on-duty technician's phone <strong>within 90 seconds of a sustained breach.</strong></p>
+        <p class="cs-p">The thinking behind it was simple: close every gap in the continuous signal. If the data is there, the problem gets caught before it becomes a loss event. The alert, the response, and the FSSAI log are all just downstream of having reliable data flowing without interruption.</p>
+        <div class="cs-steps">
+          <div class="cs-step">
+            <span class="cs-step-n">01</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">Automatic Transfer Switch (ATS)</div>
+              <p class="cs-step-desc">The Socomec ATYS G replaces the manual transfer switch. On grid failure, it switches to generator power in <strong>under 200 milliseconds</strong>, before a compressor even has time to register a loss. The 8–15 minute manual recovery window is gone.</p>
+            </div>
+          </div>
+          <div class="cs-step">
+            <span class="cs-step-n">02</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">Continuous sensor monitoring</div>
+              <p class="cs-step-desc">ESP32 microcontrollers paired with Sensirion SHT40 sensors (±0.2°C accuracy) and magnetic door contact sensors on every unit. One reading per minute, every minute, streamed via MQTT to the cloud. <strong>1,440 data points per unit per day</strong> instead of 2.</p>
+            </div>
+          </div>
+          <div class="cs-step">
+            <span class="cs-step-n">03</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">10-minute rule alert engine</div>
+              <p class="cs-step-desc">Alerts don't fire on a single out-of-range reading — that would create noise during normal loading. The engine fires only when temperature stays above threshold <strong>continuously</strong>. Configurable per unit: 10 minutes for refrigerated rooms, 5 for freezers, 3 for the blast chiller.</p>
+            </div>
+          </div>
+          <div class="cs-step">
+            <span class="cs-step-n">04</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">FSSAI compliance, automated</div>
+              <p class="cs-step-desc">The daily report now generates automatically at midnight and is delivered to the authority at 00:05 AM. The compliance officer's <strong>4 hours per week on log management: zero.</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>04</span>Tech stack</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Every layer chosen for an <em>operational reason</em></h2>
+        <p class="cs-p">Not familiarity or preference. Each component earns its place against a specific requirement.</p>
+        <table class="cs-table">
+          <thead><tr><th>Layer</th><th>Technology</th><th>Why this choice</th></tr></thead>
+          <tbody>
+            <tr><td>Sensor node</td><td>ESP32 + Sensirion SHT40</td><td>Industrial-grade MCU with built-in Wi-Fi. ±0.2°C accuracy exceeds FSSAI requirement. ~₹500/unit, runs for years. Honeywell 5816WMWH magnetic contact on each door.</td></tr>
+            <tr><td>Power monitoring</td><td>PZEM-004T v3.0</td><td>Monitors all three phases. Detects voltage drop before the compressor trips, giving the ATS context and flagging power events for the alert engine.</td></tr>
+            <tr><td>Edge gateway</td><td>Raspberry Pi 4B + Mosquitto</td><td>Runs locally on a UPS. If internet goes down, gateway keeps logging locally and buffers 24 hours of data. Alerts fire locally too — system doesn't depend on cloud to protect stock.</td></tr>
+            <tr><td>Sensor → cloud</td><td>MQTT → AWS IoT Core</td><td>ISO-standard IoT protocol. Lightweight, low-latency, handles hundreds of concurrent sensor streams. AWS IoT Core manages device certificates and scales without infrastructure management.</td></tr>
+            <tr><td>Database</td><td>TimescaleDB</td><td>Sensor data is time-series by nature. Auto-partitions by time chunk, so a query for "last 24 hours on Unit 05" scans one chunk instead of millions of rows. ~90% compression on older data.</td></tr>
+            <tr><td>Alert engine</td><td>Python on AWS Lambda</td><td>Stateless, runs on every incoming reading. Implements the 10-minute rule. Calls Firebase Cloud Messaging for push notifications.</td></tr>
+            <tr><td>App + dashboard</td><td>React Native + React.js</td><td>Single codebase for iOS and Android. Technician app focused on alert response. Web dashboard for operations manager: live heatmap, trend charts, monthly compliance view.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="cs-h3">Architecture</h3>
+        <div class="cs-arch">
+          <div class="cs-arch-layer">
+            <span class="cs-arch-label">Hardware</span>
+            <p class="cs-arch-item"><strong>ESP32</strong> sensor nodes ×7</p>
+            <p class="cs-arch-item"><strong>Sensirion SHT40</strong> temp/humidity</p>
+            <p class="cs-arch-item"><strong>Door contact</strong> sensors ×7</p>
+            <p class="cs-arch-item"><strong>PZEM-004T</strong> power monitor</p>
+            <p class="cs-arch-item"><strong>Socomec ATYS G</strong> (ATS)</p>
+          </div>
+          <div class="cs-arch-layer">
+            <span class="cs-arch-label">Edge</span>
+            <p class="cs-arch-item"><strong>Raspberry Pi 4B</strong> gateway</p>
+            <p class="cs-arch-item"><strong>Mosquitto</strong> MQTT broker</p>
+            <p class="cs-arch-item"><strong>SQLite</strong> local buffer (24h)</p>
+            <p class="cs-arch-item">UPS-backed power</p>
+            <p class="cs-arch-item">Local alert logic</p>
+          </div>
+          <div class="cs-arch-layer">
+            <span class="cs-arch-label">Cloud</span>
+            <p class="cs-arch-item"><strong>AWS IoT Core</strong></p>
+            <p class="cs-arch-item"><strong>AWS SQS</strong> message queue</p>
+            <p class="cs-arch-item"><strong>Lambda</strong> ingestion + alerts</p>
+            <p class="cs-arch-item"><strong>TimescaleDB</strong> hypertable</p>
+            <p class="cs-arch-item"><strong>FastAPI</strong> backend</p>
+          </div>
+          <div class="cs-arch-layer">
+            <span class="cs-arch-label">Delivery</span>
+            <p class="cs-arch-item"><strong>FCM</strong> push notifications</p>
+            <p class="cs-arch-item"><strong>AWS SES</strong> email alerts</p>
+            <p class="cs-arch-item"><strong>React Native</strong> mobile app</p>
+            <p class="cs-arch-item"><strong>React.js</strong> web dashboard</p>
+            <p class="cs-arch-item">FSSAI PDF at 00:05 AM</p>
+          </div>
+        </div>
+
+        <h3 class="cs-h3">Database logic</h3>
+        <p class="cs-p">One reading per minute across 7 units: 10,080 rows a day, 3.7 million a year. TimescaleDB handles this through automatic time-based partitioning — the application just writes and reads ordinary SQL.</p>
+        <div class="cs-code"><pre><span class="cm">-- Core sensor readings table, converted to a TimescaleDB hypertable</span>
+<span class="ck">CREATE TABLE</span> sensor_readings (
+  time          <span class="cn">TIMESTAMPTZ</span>    <span class="ck">NOT NULL</span>,
+  unit_code     <span class="cn">VARCHAR(10)</span>    <span class="ck">NOT NULL</span>,
+  temp_c        <span class="cn">NUMERIC(5,2)</span>   <span class="ck">NOT NULL</span>,
+  humidity_pct  <span class="cn">NUMERIC(5,2)</span>,
+  door_open     <span class="cn">BOOLEAN</span>        <span class="ck">DEFAULT</span> <span class="cs2">false</span>,
+  power_on      <span class="cn">BOOLEAN</span>        <span class="ck">DEFAULT</span> <span class="cs2">true</span>,
+  voltage_v     <span class="cn">NUMERIC(6,2)</span>,
+  <span class="ck">PRIMARY KEY</span> (time, unit_code)
+);
+
+<span class="cm">-- Partition by 7-day time chunks</span>
+<span class="ck">SELECT</span> create_hypertable(<span class="cs2">'sensor_readings'</span>, <span class="cs2">'time'</span>,
+  chunk_time_interval => <span class="ck">INTERVAL</span> <span class="cs2">'7 days'</span>);
+
+<span class="cm">-- Compress chunks older than 30 days (~90% storage reduction)</span>
+<span class="ck">SELECT</span> add_compression_policy(<span class="cs2">'sensor_readings'</span>, <span class="ck">INTERVAL</span> <span class="cs2">'30 days'</span>);
+
+<span class="cm">-- 1. Live dashboard — latest reading per unit (runs every 30s)</span>
+<span class="ck">SELECT DISTINCT ON</span> (unit_code)
+  unit_code, temp_c, humidity_pct, door_open, power_on, time
+<span class="ck">FROM</span> sensor_readings
+<span class="ck">WHERE</span> time > <span class="ck">NOW</span>() - <span class="ck">INTERVAL</span> <span class="cs2">'5 minutes'</span>
+<span class="ck">ORDER BY</span> unit_code, time <span class="ck">DESC</span>;
+
+<span class="cm">-- 2. FSSAI daily compliance — was each unit in range all day?</span>
+<span class="ck">SELECT</span> unit_code,
+  <span class="ck">MIN</span>(temp_c) <span class="ck">AS</span> min_temp,
+  <span class="ck">MAX</span>(temp_c) <span class="ck">AS</span> max_temp,
+  <span class="ck">ROUND</span>(<span class="cn">100.0</span> * <span class="ck">COUNT</span>(*) <span class="ck">FILTER</span> (
+    <span class="ck">WHERE</span> temp_c <span class="ck">BETWEEN</span> su.temp_min_c <span class="ck">AND</span> su.temp_max_c
+  ) / <span class="ck">COUNT</span>(*), <span class="cn">1</span>) <span class="ck">AS</span> compliance_pct
+<span class="ck">FROM</span> sensor_readings sr
+<span class="ck">JOIN</span> storage_units su <span class="ck">USING</span> (unit_code)
+<span class="ck">WHERE</span> <span class="ck">DATE</span>(time) = <span class="ck">CURRENT_DATE</span> - <span class="cn">1</span>
+<span class="ck">GROUP BY</span> unit_code, su.temp_min_c, su.temp_max_c;</pre></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEFORE / AFTER -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>05</span>Before &amp; after</div>
+      <div class="cs-sec-content">
+        <div class="cs-ba">
+          <div class="cs-ba-col">
+            <span class="cs-ba-label">Before</span>
+            <div class="cs-ba-item">Temperature logged twice a day in a notebook</div>
+            <div class="cs-ba-item">Power failure: 8–15 minutes to generator, manually</div>
+            <div class="cs-ba-item">Door-ajar events undetectable unless someone walked past</div>
+            <div class="cs-ba-item">FSSAI report: weekly manual data entry, monthly email</div>
+            <div class="cs-ba-item">Compliance officer spends 4 hrs/week on log management</div>
+            <div class="cs-ba-item">Stock loss events confirmed: 2 in 18 months, ₹8.9 lakhs</div>
+          </div>
+          <div class="cs-ba-col">
+            <span class="cs-ba-label">After</span>
+            <div class="cs-ba-item">1,440 automated readings per unit per day</div>
+            <div class="cs-ba-item">Power failure: ATS switches to generator in &lt;200ms</div>
+            <div class="cs-ba-item">Door open 5+ continuous minutes → push alert fires immediately</div>
+            <div class="cs-ba-item">FSSAI report generated automatically, delivered 00:05 AM</div>
+            <div class="cs-ba-item">Compliance officer log management time: zero</div>
+            <div class="cs-ba-item">Zero stock loss events in 12 months post-deployment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTCOMES -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>06</span>Outcomes</div>
+      <div class="cs-sec-content">
+        <div class="cs-outcomes">
+          <div class="cs-outcome"><span class="cs-outcome-n">₹23.8L</span><span class="cs-outcome-l">Annual saving</span><p class="cs-outcome-desc">Across prevented stock loss, door incidents caught early, power events neutralised by ATS, and compliance admin time recovered.</p></div>
+          <div class="cs-outcome"><span class="cs-outcome-n">3 mo</span><span class="cs-outcome-l">Payback period</span><p class="cs-outcome-desc">Total system cost including hardware, installation, and first year of cloud infrastructure: ₹5.6 lakhs. Recovered in under one quarter.</p></div>
+          <div class="cs-outcome"><span class="cs-outcome-n">720×</span><span class="cs-outcome-l">More data points/day</span><p class="cs-outcome-desc">From 2 manual readings per unit to 1,440 automated readings. Every minute of every day is now in the compliance record.</p></div>
+          <div class="cs-outcome"><span class="cs-outcome-n">&lt;200ms</span><span class="cs-outcome-l">Power recovery</span><p class="cs-outcome-desc">ATS switches grid to generator before most compressors register a voltage drop. The 8–15 minute manual window is eliminated entirely.</p></div>
+          <div class="cs-outcome"><span class="cs-outcome-n">0 hrs</span><span class="cs-outcome-l">Manual compliance work</span><p class="cs-outcome-desc">The compliance officer's 4 hours per week on log management, data entry, and FSSAI report preparation is fully automated.</p></div>
+          <div class="cs-outcome"><span class="cs-outcome-n">4.2 min</span><span class="cs-outcome-l">Avg alert response</span><p class="cs-outcome-desc">From breach detection to technician acknowledgement. Previously unmeasurable — there was no alert system at all.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEMS -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>07</span>What went wrong</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Building on hardware means the <em>real world pushes back</em></h2>
+        <div class="cs-steps">
+          <div class="cs-step">
+            <span class="cs-step-n">01</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">Dirty and missing sensor data</div>
+              <p class="cs-step-desc">Sensors occasionally sent malformed payloads: truncated JSON, null temperature values, or wrong timestamps. We had to build a validation layer that flagged bad readings, stored them separately with a quality marker, and excluded them from compliance calculations without dropping them entirely. They still needed to exist for audit purposes.</p>
+            </div>
+          </div>
+          <div class="cs-step">
+            <span class="cs-step-n">02</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">Sensors going offline mid-operation</div>
+              <p class="cs-step-desc">A few ESP32 units lost Wi-Fi connectivity intermittently during peak afternoon heat. A gap in readings looked exactly like a damaged or switched-off sensor. We had to distinguish "sensor is offline" from "sensor is reading something it shouldn't" — one is a maintenance issue, the other is an emergency. We added a heartbeat check separate from temperature readings.</p>
+            </div>
+          </div>
+          <div class="cs-step">
+            <span class="cs-step-n">03</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">Secure transmission was harder than expected</div>
+              <p class="cs-step-desc">Getting data securely to AWS IoT Core required device certificates, mutual TLS, and a proper certificate rotation process. Every physical device needed its own certificate — and if one expired silently, the unit would stop reporting with no obvious error. We had to build certificate expiry monitoring into the system, which wasn't in the original spec.</p>
+            </div>
+          </div>
+          <div class="cs-step">
+            <span class="cs-step-n">04</span>
+            <div class="cs-step-body">
+              <div class="cs-step-title">Query performance at scale</div>
+              <p class="cs-step-desc">Once we had a few months of data across 7 units, some dashboard queries started slowing noticeably — especially trend charts scanning large time ranges. TimescaleDB's chunking solved most of it, but we also had to add a pre-aggregated hourly rollup table so the 30-day chart wasn't recalculating from raw readings on every page load.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cs-body -->
+
+<!-- REFLECTION -->
+<div class="cs-reflection au">
+  <span class="cs-reflection-label">What I learned</span>
+  <div class="cs-reflection-items">
+    <div class="cs-ref-item">
+      <span class="cs-ref-n">01</span>
+      <p class="cs-ref-text">The most important product decision happened before any requirement was written. We had to agree on what <strong>"failure" actually meant.</strong> The client came in wanting to monitor temperature. What they really needed was to close every gap in the continuous signal. That reframe changed the scope significantly — and brought power monitoring and ATS integration in from day one rather than as an afterthought.</p>
+    </div>
+    <div class="cs-ref-item">
+      <span class="cs-ref-n">02</span>
+      <p class="cs-ref-text">The <strong>10-minute alert rule</strong> is a good example of where product thinking and technical thinking had to be in the same room. A simple implementation fires an alert the moment temperature crosses a threshold. In practice, that creates constant noise every time someone opens a door during loading, and the technician stops paying attention within a week. Getting the rule right meant understanding what actually happens on the floor, not just what the data model looks like.</p>
+    </div>
+    <div class="cs-ref-item">
+      <span class="cs-ref-n">03</span>
+      <p class="cs-ref-text">The local resilience architecture was the hardest sell. Running alert logic on the edge gateway added complexity and cost. But the alternative was a system that could fail to protect stock at the exact moment the internet went down during a power event — which is precisely when it was needed most. <strong>Some technical decisions are really trust decisions.</strong> If the people relying on a system don't believe it will work when things go wrong, they won't rely on it when things go right either.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cs-nav-footer">
+  <a href="case-07-mamaglow-v2.html" class="cs-nav-link">
+    <div>
+      <span class="cs-nav-label">Next case</span>
+      <div class="cs-nav-title">Omega-3 Platform Strategy</div>
+    </div>
+    <span class="cs-nav-arrow">→</span>
+  </a>
+  <a href="portfolio-v2.html" class="cs-nav-link" style="flex-direction:row-reverse;">
+    <div style="text-align:right;">
+      <span class="cs-nav-label">All work</span>
+      <div class="cs-nav-title">Back to portfolio</div>
+    </div>
+    <span class="cs-nav-arrow">↑</span>
+  </a>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=window.innerWidth/2,my=window.innerHeight/2,tx=mx,ty=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){tx+=(mx-tx)*0.12;ty+=(my-ty)*0.12;curR.style.left=tx+'px';curR.style.top=ty+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('lh'));el.addEventListener('mouseleave',()=>document.body.classList.remove('lh'));});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.06,rootMargin:'0px 0px -48px 0px'});
+document.querySelectorAll('.au').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

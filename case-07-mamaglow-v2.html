@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Omega-3 Platform Strategy · Ajay Swaminathan</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0D1B2A;--navy2:#162336;--blue:#1E3A5F;
+  --sand:#E8D5B0;--sand2:#D4BC94;
+  --cream:#F5F2EC;--cream2:#EDE8DF;
+  --ink:#0D1B2A;--ink2:#3D5166;--ink3:#7A90A4;
+  --serif:'Instrument Serif',Georgia,serif;
+  --body:'Epilogue',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);--ease2:cubic-bezier(.34,1.56,.64,1);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:8px;height:8px;background:var(--sand);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#curR{position:fixed;width:36px;height:36px;border:1.5px solid rgba(232,213,176,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .45s var(--ease),height .45s var(--ease),opacity .3s;}
+body:not(:hover) #curR{opacity:0;}
+body.lh #cur{width:12px;height:12px;background:var(--sand2);}
+body.lh #curR{width:56px;height:56px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 56px;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,27,42,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08);}
+.nav-back{font-family:var(--body);font-size:13px;font-weight:500;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;transition:color .2s;}
+.nav-back:hover{color:#fff;}
+.nav-back::before{content:'←';transition:transform .2s var(--ease);}
+.nav-back:hover::before{transform:translateX(-3px);}
+.nav-logo{font-family:var(--serif);font-size:22px;color:#fff;text-decoration:none;letter-spacing:-0.02em;}
+.nav-logo em{font-style:italic;color:var(--sand);}
+.nav-cta{font-family:var(--body);font-size:13px;font-weight:600;background:var(--sand);color:var(--navy);padding:9px 22px;border-radius:3px;text-decoration:none;transition:background .2s,transform .15s var(--ease2);}
+.nav-cta:hover{background:var(--sand2);transform:translateY(-1px);}
+
+/* CASE HERO */
+.cs-hero{background:var(--navy);padding:120px 56px 80px;position:relative;overflow:hidden;}
+.cs-hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:38%;background:var(--blue);clip-path:polygon(20% 0,100% 0,100% 100%,0% 100%);opacity:0.5;}
+.cs-hero::before{content:'';position:absolute;left:56px;right:56px;bottom:0;height:1px;background:rgba(232,213,176,0.12);}
+.cs-hero-inner{position:relative;z-index:1;max-width:900px;}
+.cs-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:40px;opacity:0;animation:fadeUp .6s .1s var(--ease) forwards;}
+.cs-eyebrow-tag{font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--sand);opacity:0.7;}
+.cs-eyebrow-sep{width:1px;height:14px;background:rgba(232,213,176,0.25);}
+.cs-eyebrow-num{font-family:var(--serif);font-size:13px;color:rgba(232,213,176,0.4);}
+.cs-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.cs-tag{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(232,213,176,0.55);border:1px solid rgba(232,213,176,0.18);padding:4px 12px;border-radius:2px;}
+.cs-hero-h{font-family:var(--serif);font-size:clamp(40px,6vw,84px);font-weight:400;line-height:0.93;letter-spacing:-0.035em;color:#fff;margin-bottom:32px;opacity:0;animation:fadeUp .8s .25s var(--ease) forwards;}
+.cs-hero-h em{font-style:italic;color:var(--sand);}
+.cs-hero-sub{font-size:17px;line-height:1.75;color:rgba(255,255,255,0.5);max-width:620px;font-weight:300;margin-bottom:56px;opacity:0;animation:fadeUp .7s .42s var(--ease) forwards;}
+.cs-hero-sub strong{color:rgba(255,255,255,0.82);font-weight:500;}
+.cs-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;opacity:0;animation:fadeUp .7s .6s var(--ease) forwards;}
+.cs-stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);padding:28px 24px;}
+.cs-stat-n{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:400;color:#fff;letter-spacing:-0.03em;display:block;line-height:1;margin-bottom:8px;}
+.cs-stat-n em{color:var(--sand);font-style:normal;}
+.cs-stat-l{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+
+/* CONTENT BODY */
+.cs-body{max-width:1280px;margin:0 auto;padding:0 56px;}
+
+/* SECTION */
+.cs-sec{padding:80px 0;border-bottom:1px solid var(--cream2);}
+.cs-sec:last-child{border-bottom:none;}
+.cs-sec-layout{display:grid;grid-template-columns:240px 1fr;gap:64px;align-items:start;}
+.cs-sec-label{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink3);padding-top:6px;position:sticky;top:88px;}
+.cs-sec-label span{display:block;font-family:var(--serif);font-size:32px;font-weight:400;letter-spacing:-0.04em;color:var(--cream2);line-height:1;margin-bottom:8px;}
+.cs-sec-content{}
+.cs-h2{font-family:var(--serif);font-size:clamp(28px,3vw,42px);font-weight:400;letter-spacing:-0.03em;line-height:1.05;color:var(--ink);margin-bottom:24px;}
+.cs-h2 em{font-style:italic;color:var(--blue);}
+.cs-h3{font-family:var(--serif);font-size:clamp(20px,2vw,26px);font-weight:400;letter-spacing:-0.02em;line-height:1.15;color:var(--ink);margin-bottom:14px;margin-top:40px;}
+.cs-p{font-size:15px;line-height:1.85;color:var(--ink2);font-weight:300;margin-bottom:20px;}
+.cs-p strong{color:var(--ink);font-weight:600;}
+.cs-p:last-child{margin-bottom:0;}
+
+/* PULL QUOTE */
+.cs-quote{border-left:3px solid var(--sand);padding:20px 28px;margin:36px 0;background:var(--cream2);border-radius:0 4px 4px 0;}
+.cs-quote p{font-family:var(--serif);font-size:clamp(18px,2vw,22px);font-weight:400;font-style:italic;line-height:1.5;color:var(--ink);}
+
+/* PAIN GRID */
+.cs-pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:32px 0;}
+.cs-pain-cell{background:var(--navy);padding:28px 24px;}
+.cs-pain-cell:nth-child(odd){background:var(--navy2);}
+.cs-pain-n{font-family:var(--serif);font-size:36px;font-weight:400;color:var(--sand);letter-spacing:-0.04em;line-height:1;display:block;margin-bottom:6px;}
+.cs-pain-l{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:12px;display:block;}
+.cs-pain-desc{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65;font-weight:300;}
+.cs-pain-desc strong{color:rgba(255,255,255,0.85);font-weight:500;}
+
+/* NUMBERED LIST */
+.cs-steps{display:flex;flex-direction:column;gap:2px;margin:24px 0;}
+.cs-step{display:grid;grid-template-columns:52px 1fr;gap:20px;background:var(--cream2);padding:28px 24px;align-items:start;transition:background .2s;}
+.cs-step:hover{background:#e2ddd5;}
+.cs-step-n{font-family:var(--serif);font-size:32px;font-weight:400;color:var(--cream);letter-spacing:-0.04em;line-height:1;padding-top:2px;}
+.cs-step-body{}
+.cs-step-title{font-size:14px;font-weight:700;letter-spacing:0.01em;color:var(--ink);margin-bottom:8px;}
+.cs-step-desc{font-size:13px;line-height:1.7;color:var(--ink2);font-weight:300;}
+.cs-step-desc strong{color:var(--ink);font-weight:600;}
+
+/* TECH TABLE */
+.cs-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px;}
+.cs-table th{font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);padding:12px 16px;border-bottom:2px solid var(--ink);text-align:left;}
+.cs-table td{padding:16px;border-bottom:1px solid var(--cream2);vertical-align:top;line-height:1.6;color:var(--ink2);font-weight:300;}
+.cs-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;}
+.cs-table td:nth-child(2){font-family:var(--body);color:var(--blue);font-weight:500;font-size:12px;}
+.cs-table tr:hover td{background:var(--cream2);}
+
+/* CODE BLOCK */
+.cs-code{background:var(--navy);border-radius:4px;padding:28px 32px;margin:20px 0;overflow-x:auto;}
+.cs-code pre{font-family:'DM Mono',monospace;font-size:12px;line-height:1.75;color:rgba(255,255,255,0.7);}
+.cs-code .cm{color:rgba(232,213,176,0.4);}
+.cs-code .ck{color:#93c5fd;}
+.cs-code .cs2{color:#86efac;}
+.cs-code .cn{color:var(--sand);}
+
+/* BEFORE/AFTER */
+.cs-ba{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:24px 0;}
+.cs-ba-col{padding:28px 24px;}
+.cs-ba-col:first-child{background:var(--navy2);}
+.cs-ba-col:last-child{background:var(--blue);}
+.cs-ba-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:20px;display:block;}
+.cs-ba-col:first-child .cs-ba-label{color:rgba(232,213,176,0.4);}
+.cs-ba-col:last-child .cs-ba-label{color:var(--sand);}
+.cs-ba-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;font-size:13px;line-height:1.6;font-weight:300;}
+.cs-ba-col:first-child .cs-ba-item{color:rgba(255,255,255,0.45);}
+.cs-ba-col:last-child .cs-ba-item{color:rgba(255,255,255,0.75);}
+.cs-ba-item::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px;}
+.cs-ba-col:first-child .cs-ba-item::before{background:rgba(255,255,255,0.2);}
+.cs-ba-col:last-child .cs-ba-item::before{background:var(--sand);}
+
+/* OUTCOMES */
+.cs-outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-outcome{background:var(--navy);padding:32px 24px;}
+.cs-outcome:nth-child(even){background:var(--blue);}
+.cs-outcome-n{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--sand);letter-spacing:-0.04em;line-height:1;display:block;margin-bottom:8px;}
+.cs-outcome-l{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-bottom:12px;}
+.cs-outcome-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.65;font-weight:300;}
+
+/* ARCHITECTURE */
+.cs-arch{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin:24px 0;}
+.cs-arch-layer{background:var(--cream2);padding:24px 20px;}
+.cs-arch-layer:nth-child(2){background:var(--navy2);}
+.cs-arch-layer:nth-child(3){background:var(--blue);}
+.cs-arch-layer:nth-child(4){background:var(--navy);}
+.cs-arch-label{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;display:block;}
+.cs-arch-layer:nth-child(1) .cs-arch-label{color:var(--ink3);}
+.cs-arch-layer:nth-child(n+2) .cs-arch-label{color:rgba(232,213,176,0.5);}
+.cs-arch-item{font-size:12px;line-height:1.6;margin-bottom:8px;font-weight:300;}
+.cs-arch-layer:nth-child(1) .cs-arch-item{color:var(--ink2);}
+.cs-arch-layer:nth-child(n+2) .cs-arch-item{color:rgba(255,255,255,0.55);}
+.cs-arch-item strong{font-weight:600;}
+.cs-arch-layer:nth-child(1) .cs-arch-item strong{color:var(--ink);}
+.cs-arch-layer:nth-child(n+2) .cs-arch-item strong{color:rgba(255,255,255,0.9);}
+
+/* PRODUCT CARDS */
+.cs-products{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-product{background:var(--navy);padding:32px 24px;position:relative;overflow:hidden;}
+.cs-product::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sand);}
+.cs-product-phase{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(232,213,176,0.45);margin-bottom:16px;display:block;}
+.cs-product-name{font-family:var(--serif);font-size:22px;font-weight:400;color:#fff;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1;}
+.cs-product-ing{font-size:12px;color:var(--sand);font-weight:500;margin-bottom:16px;line-height:1.5;}
+.cs-product-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.65;font-weight:300;}
+
+/* REFLECTION */
+.cs-reflection{background:var(--navy);padding:56px;position:relative;overflow:hidden;margin:0 0 0;}
+.cs-reflection::before{content:'"';font-family:var(--serif);font-size:240px;color:rgba(232,213,176,0.04);position:absolute;top:-40px;left:24px;line-height:1;pointer-events:none;}
+.cs-reflection-label{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sand);opacity:0.55;margin-bottom:32px;display:block;position:relative;z-index:1;}
+.cs-reflection-items{display:flex;flex-direction:column;gap:0;position:relative;z-index:1;}
+.cs-ref-item{padding:28px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.cs-ref-item:first-child{border-top:1px solid rgba(255,255,255,0.06);}
+.cs-ref-item:last-child{border-bottom:none;}
+.cs-ref-n{font-family:var(--serif);font-size:13px;font-weight:400;color:rgba(232,213,176,0.3);margin-bottom:10px;display:block;}
+.cs-ref-text{font-size:15px;line-height:1.8;color:rgba(255,255,255,0.55);font-weight:300;}
+.cs-ref-text strong{color:#fff;font-weight:500;}
+
+/* NEXT CASE / FOOTER */
+.cs-nav-footer{background:var(--cream2);padding:64px 56px;display:flex;justify-content:space-between;align-items:center;}
+.cs-nav-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;display:block;}
+.cs-nav-title{font-family:var(--serif);font-size:clamp(20px,2.5vw,30px);font-weight:400;letter-spacing:-0.02em;color:var(--ink);}
+.cs-nav-link{display:flex;align-items:center;gap:10px;text-decoration:none;transition:gap .2s var(--ease);}
+.cs-nav-link:hover{gap:16px;}
+.cs-nav-link:hover .cs-nav-title{color:var(--blue);}
+.cs-nav-arrow{font-family:var(--serif);font-size:24px;color:var(--ink3);}
+
+/* UTILS */
+.au{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease);}
+.au.in{opacity:1;transform:translateY(0);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .cs-hero{padding:100px 28px 56px;}
+  .cs-body{padding:0 28px;}
+  .cs-sec-layout{grid-template-columns:1fr;gap:24px;}
+  .cs-sec-label{position:static;}
+  .cs-stats{grid-template-columns:1fr 1fr;}
+  .cs-pain-grid,.cs-ba,.cs-products{grid-template-columns:1fr;}
+  .cs-outcomes{grid-template-columns:1fr 1fr;}
+  .cs-arch{grid-template-columns:1fr 1fr;}
+  .cs-nav-footer{flex-direction:column;gap:32px;align-items:flex-start;padding:48px 28px;}
+  .cs-reflection{padding:40px 28px;}
+}
+@media(max-width:600px){
+  .cs-stats{grid-template-columns:1fr 1fr;}
+  .cs-outcomes{grid-template-columns:1fr;}
+  .cs-arch{grid-template-columns:1fr;}
+}
+/* Portfolio matrix */
+.cs-matrix{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;margin:24px 0;min-height:320px;}
+.cs-matrix-cell{padding:28px 24px;position:relative;}
+.cs-matrix-cell:nth-child(1){background:var(--cream2);}
+.cs-matrix-cell:nth-child(2){background:var(--blue);}
+.cs-matrix-cell:nth-child(3){background:var(--cream2);}
+.cs-matrix-cell:nth-child(4){background:var(--navy);}
+.cs-matrix-axis{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;}
+.cs-matrix-q{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;display:block;}
+.cs-matrix-cell:nth-child(1) .cs-matrix-q,.cs-matrix-cell:nth-child(3) .cs-matrix-q{color:var(--ink3);}
+.cs-matrix-cell:nth-child(2) .cs-matrix-q,.cs-matrix-cell:nth-child(4) .cs-matrix-q{color:rgba(232,213,176,0.5);}
+.cs-matrix-item{font-size:13px;font-weight:300;line-height:1.5;margin-bottom:6px;}
+.cs-matrix-cell:nth-child(1) .cs-matrix-item,.cs-matrix-cell:nth-child(3) .cs-matrix-item{color:var(--ink2);}
+.cs-matrix-cell:nth-child(2) .cs-matrix-item,.cs-matrix-cell:nth-child(4) .cs-matrix-item{color:rgba(255,255,255,0.6);}
+.cs-matrix-item.new{font-weight:600;}
+.cs-matrix-cell:nth-child(2) .cs-matrix-item.new,.cs-matrix-cell:nth-child(4) .cs-matrix-item.new{color:var(--sand);}
+/* Evidence cards */
+.cs-evidence{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-ev-card{background:var(--navy2);padding:32px 24px;}
+.cs-ev-n{font-family:var(--serif);font-size:clamp(36px,4vw,52px);font-weight:400;color:var(--sand);letter-spacing:-0.04em;line-height:1;display:block;margin-bottom:8px;}
+.cs-ev-l{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,213,176,0.4);display:block;margin-bottom:16px;}
+.cs-ev-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.65;font-weight:300;}
+/* GTM phase table */
+.cs-gtm{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-gtm-phase{padding:28px 24px;}
+.cs-gtm-phase:nth-child(1){background:var(--cream2);}
+.cs-gtm-phase:nth-child(2){background:var(--navy2);}
+.cs-gtm-phase:nth-child(3){background:var(--navy);}
+.cs-gtm-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:8px;display:block;}
+.cs-gtm-phase:nth-child(1) .cs-gtm-label{color:var(--ink3);}
+.cs-gtm-phase:nth-child(n+2) .cs-gtm-label{color:rgba(232,213,176,0.45);}
+.cs-gtm-timeline{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:-0.02em;margin-bottom:16px;display:block;}
+.cs-gtm-phase:nth-child(1) .cs-gtm-timeline{color:var(--ink);}
+.cs-gtm-phase:nth-child(n+2) .cs-gtm-timeline{color:#fff;}
+.cs-gtm-item{font-size:13px;line-height:1.6;margin-bottom:8px;font-weight:300;padding-left:14px;position:relative;}
+.cs-gtm-item::before{content:'—';position:absolute;left:0;opacity:0.4;}
+.cs-gtm-phase:nth-child(1) .cs-gtm-item{color:var(--ink2);}
+.cs-gtm-phase:nth-child(n+2) .cs-gtm-item{color:rgba(255,255,255,0.5);}
+/* LTV metrics */
+.cs-ltv{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:24px 0;}
+.cs-ltv-item{background:var(--blue);padding:32px 24px;text-align:center;}
+.cs-ltv-n{font-family:var(--serif);font-size:clamp(36px,4vw,56px);font-weight:400;color:var(--sand);letter-spacing:-0.04em;line-height:1;display:block;margin-bottom:8px;}
+.cs-ltv-l{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,213,176,0.4);display:block;margin-bottom:12px;}
+.cs-ltv-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="curR"></div>
+
+<nav>
+  <a href="portfolio-v2.html" class="nav-back">Back to work</a>
+  <a href="portfolio-v2.html" class="nav-logo">AJ<em>.</em></a>
+  <a href="mailto:hello@ajayvaidhyanathan.com" class="nav-cta">Hire me</a>
+</nav>
+
+<!-- HERO -->
+<div class="cs-hero">
+  <div class="cs-hero-inner">
+    <div class="cs-eyebrow">
+      <span class="cs-eyebrow-tag">Product Strategy · E-commerce</span>
+      <span class="cs-eyebrow-sep"></span>
+      <span class="cs-eyebrow-num">Case 07</span>
+      <span class="cs-eyebrow-sep"></span>
+      <div class="cs-tags">
+        <span class="cs-tag">Portfolio strategy</span>
+        <span class="cs-tag">D2C</span>
+        <span class="cs-tag">GTM</span>
+      </div>
+    </div>
+    <h1 class="cs-hero-h">From commodity ingredient<br/>to premium <em>product platform:</em><br/>an Omega-3 strategy</h1>
+    <p class="cs-hero-sub">The company sold Omega-3 as a basic Essential — one SKU, low margin, low differentiation. I built the strategic case for <strong>repositioning it as a multi-product ingredient platform</strong> targeting life-stage specific needs, starting with the prenatal segment as the highest-value entry point.</p>
+    <div class="cs-stats">
+      <div class="cs-stat"><span class="cs-stat-n">4</span><span class="cs-stat-l">New SKUs proposed</span></div>
+      <div class="cs-stat"><span class="cs-stat-n"><em>€46M</em></span><span class="cs-stat-l">SAM in DACH</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">5×</span><span class="cs-stat-l">LTV potential</span></div>
+      <div class="cs-stat"><span class="cs-stat-n">90d</span><span class="cs-stat-l">To first launch</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-body">
+
+  <!-- THE SITUATION -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>01</span>The situation</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Two years of growth, then a <em>structural ceiling</em></h2>
+        <p class="cs-p">After two years of strong ARR growth, the business had hit structural limits. The influencer pool in DACH and France was saturated — not because of spend efficiency, but because every reachable person had already been reached. LTV of €60 per customer looked healthy until you accounted for the 18-24 month realization window, which created a cash timing problem the unit economics alone couldn't solve.</p>
+        <p class="cs-p">Revenue was concentrated in a few top products and a few top influencers. That engine was decelerating.</p>
+        <p class="cs-p">I stress-tested every alternative before arriving at a new product recommendation: <strong>geographic expansion</strong> required a 12-18 month minimum runway before meaningful revenue; <strong>increased ad spend</strong> faced diminishing returns on a tapped audience; <strong>retention-only optimization</strong> is defensive, not a growth lever. A new product was the only lever that simultaneously created a new reason to buy, unlocked cross-sell, reached new audiences, and opened a new influencer category.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO MATRIX -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>02</span>The platform thesis</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Omega-3 as an <em>ingredient platform,</em> not a product</h2>
+        <p class="cs-p">The core insight from the portfolio matrix: Omega-3 sat in the "Essentials" quadrant — high repeat, stable revenue, but low differentiation and low margin. The "Complex Heroes" quadrant (multi-ingredient, premium, high LTV) had clear vacancies.</p>
+        <div class="cs-matrix">
+          <div class="cs-matrix-cell">
+            <span class="cs-matrix-q">Essentials — Existing</span>
+            <div class="cs-matrix-item">Omega-3 Fish Oil</div>
+          </div>
+          <div class="cs-matrix-cell">
+            <span class="cs-matrix-q">Complex Heroes — New</span>
+            <div class="cs-matrix-item new">✦ MamaGlow Prenatal Complex</div>
+            <div class="cs-matrix-item new">✦ MamaGlow Postnatal Complex</div>
+            <div class="cs-matrix-item new">✦ MamaGlow Kids Complex</div>
+          </div>
+          <div class="cs-matrix-cell">
+            <span class="cs-matrix-q">Essentials — New</span>
+            <div class="cs-matrix-item">Vegan Omega-3 (algae)</div>
+          </div>
+          <div class="cs-matrix-cell">
+            <span class="cs-matrix-q">Complex Heroes — Existing</span>
+            <div class="cs-matrix-item">Hair Glow Complex</div>
+            <div class="cs-matrix-item">Collagen + Biotin</div>
+          </div>
+        </div>
+        <div class="cs-quote">
+          <p>"Omega-3 is not a product. It is an ingredient that follows a person through every stage of their life — pregnancy, postpartum recovery, childhood development. We were selling it as a one-size product to everyone and capturing none of that specificity."</p>
+        </div>
+        <p class="cs-p">The strategic repositioning was to treat Omega-3 — specifically <strong>algae-sourced DHA and EPA</strong> — as an ingredient platform that could anchor premium complex products at each major life stage. Algae-sourced DHA had two properties that made this viable: it eliminates the fishy taste barrier (the most cited reason for non-compliance), and it is inherently vegan, opening a meaningfully underserved segment.</p>
+        <p class="cs-p">Each new product uses algae DHA as the anchor ingredient, then adds clinically relevant co-ingredients for the specific life stage. The result is a product family a single customer can move through over <strong>5+ years — at zero incremental CAC per transition.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE EVIDENCE -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>03</span>The evidence</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Three independent sources pointing to <em>the same gap</em></h2>
+        <p class="cs-p">The recommendation was built on three independent data sources that all pointed to the same gap, from three different angles. Any one data point can be dismissed as anecdotal. All three independently pointing to the same gap made the case much harder to argue against in a board setting.</p>
+        <div class="cs-evidence">
+          <div class="cs-ev-card">
+            <span class="cs-ev-n">2,000+</span>
+            <span class="cs-ev-l">Internal site search</span>
+            <p class="cs-ev-desc">Pregnancy-related search queries on-site in 12 months. Customers were actively looking for prenatal products the company did not carry.</p>
+          </div>
+          <div class="cs-ev-card">
+            <span class="cs-ev-n">120+</span>
+            <span class="cs-ev-l">Customer feedback</span>
+            <p class="cs-ev-desc">Signals across email replies, reviews, and support tickets — 47 direct safety questions during pregnancy, 23 explicit requests for omega-3 in gummy format.</p>
+          </div>
+          <div class="cs-ev-card">
+            <span class="cs-ev-n">85K+</span>
+            <span class="cs-ev-l">Amazon market analysis</span>
+            <p class="cs-ev-desc">Monthly category sales on Amazon DE with 41% YoY growth in "gummy prenatal" searches. Only 2 premium vegan gummy competitors existed.</p>
+          </div>
+        </div>
+        <p class="cs-p">The churn data added urgency. Women aged 28-35 were churning at <strong>34% above the average rate</strong> — not because of product dissatisfaction, but because pregnancy forced them to stop taking existing products and look elsewhere. The portfolio had no answer for that life-stage transition. Every churning customer in that demographic was a retention failure caused entirely by a product gap.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT CONCEPTS -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>04</span>Product concepts</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Three products, one <em>connected ecosystem</em></h2>
+        <p class="cs-p">Designed as a connected ecosystem rather than standalone SKUs. Each one is a Complex Hero by positioning: multi-ingredient, life-stage specific, premium-priced, and anchored by the same algae DHA platform.</p>
+        <div class="cs-products">
+          <div class="cs-product">
+            <span class="cs-product-phase">Entry point · Phase 1</span>
+            <div class="cs-product-name">MamaGlow Prenatal</div>
+            <div class="cs-product-ing">Algae DHA + EPA · Folic acid (400mcg) · Vitamin D3 + Iodine · Soft chew format</div>
+            <p class="cs-product-desc">Eliminates fishy taste barrier. Vegan — opens a segment competitors don't serve. No direct competition at premium vegan gummy tier in DE market.</p>
+          </div>
+          <div class="cs-product">
+            <span class="cs-product-phase">Retention · Phase 2</span>
+            <div class="cs-product-name">MamaGlow Postnatal</div>
+            <div class="cs-product-ing">Algae DHA · Iron + Folate · Vitamin B12 · Zinc · Soft chew format</div>
+            <p class="cs-product-desc">Addresses postpartum depletion — a gap the prenatal customer immediately needs filled. The cross-sell trigger is built into the life stage.</p>
+          </div>
+          <div class="cs-product">
+            <span class="cs-product-phase">Cross-sell · Phase 3</span>
+            <div class="cs-product-name">MamaGlow Kids</div>
+            <div class="cs-product-ing">Algae DHA · Vitamin D3 · Iodine · Zinc · Kids gummy format</div>
+            <p class="cs-product-desc">Follows the customer as the child grows. A 5-year relationship: Prenatal → Postnatal → Kids, at €0 incremental CAC after acquisition.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LTV CASE -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>05</span>The LTV case</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Three mechanisms that change the <em>unit economics</em></h2>
+        <div class="cs-ltv">
+          <div class="cs-ltv-item">
+            <span class="cs-ltv-n">€0</span>
+            <span class="cs-ltv-l">Phase 1 CAC</span>
+            <p class="cs-ltv-desc">Cross-sell to existing Omega-3 and Hair Glow customers. No new acquisition needed for the first cohort.</p>
+          </div>
+          <div class="cs-ltv-item">
+            <span class="cs-ltv-n">+40%</span>
+            <span class="cs-ltv-l">LTV uplift</span>
+            <p class="cs-ltv-desc">Estimated for customers holding 2+ SKUs simultaneously, based on existing cohort data. LTV realization collapses from 18+ months to 3-6 months.</p>
+          </div>
+          <div class="cs-ltv-item">
+            <span class="cs-ltv-n">5×</span>
+            <span class="cs-ltv-l">Lifetime value potential</span>
+            <p class="cs-ltv-desc">For a customer who moves Prenatal → Postnatal → Kids over a 5-year relationship vs. a single-SKU customer.</p>
+          </div>
+        </div>
+        <p class="cs-p">Three mechanisms drove this: <strong>churn conversion</strong> — the 34% above-average churn in 28-35 women is caused entirely by a product gap; <strong>LTV realization collapse</strong> — a cross-sold customer completes a second transaction immediately, compressing 18+ months to 3-6 months; and <strong>influencer pool expansion</strong> — pregnancy and parenting influencers are a completely untapped acquisition channel, breaking the existing concentration risk.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GTM -->
+  <div class="cs-sec au">
+    <div class="cs-sec-layout">
+      <div class="cs-sec-label"><span>06</span>Go-to-market</div>
+      <div class="cs-sec-content">
+        <h2 class="cs-h2">Validate with zero-CAC cohorts before <em>opening paid channels</em></h2>
+        <div class="cs-gtm">
+          <div class="cs-gtm-phase">
+            <span class="cs-gtm-label">Phase 1</span>
+            <span class="cs-gtm-timeline">Days 0–30</span>
+            <div class="cs-gtm-item">Email existing Omega-3 and Hair Glow customers</div>
+            <div class="cs-gtm-item">Bundle at introductory price</div>
+            <div class="cs-gtm-item">Collect first-party reviews and NPS scores</div>
+            <div class="cs-gtm-item">Validate 30-day repeat purchase signal before scaling</div>
+          </div>
+          <div class="cs-gtm-phase">
+            <span class="cs-gtm-label">Phase 2</span>
+            <span class="cs-gtm-timeline">Days 30–90</span>
+            <div class="cs-gtm-item">Partner with maternal health influencers</div>
+            <div class="cs-gtm-item">DTC paid social targeting women 26-38 in DACH</div>
+            <div class="cs-gtm-item">Amazon listing across prenatal keywords</div>
+            <div class="cs-gtm-item">A/B test "prenatal" vs "pregnancy" messaging</div>
+          </div>
+          <div class="cs-gtm-phase">
+            <span class="cs-gtm-label">Phase 3</span>
+            <span class="cs-gtm-timeline">Days 90+</span>
+            <div class="cs-gtm-item">Apotheke channel — premium prenatal shelf</div>
+            <div class="cs-gtm-item">Rossmann/DM: family health aisle</div>
+            <div class="cs-gtm-item">France DTC expansion using DACH validated data</div>
+            <div class="cs-gtm-item">Kids variant launched on confirmed search signal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cs-body -->
+
+<!-- REFLECTION -->
+<div class="cs-reflection au">
+  <span class="cs-reflection-label">What I learned</span>
+  <div class="cs-reflection-items">
+    <div class="cs-ref-item">
+      <span class="cs-ref-n">01</span>
+      <p class="cs-ref-text">The most important reframe in this project was moving from <strong>"new product" to "ingredient platform."</strong> Proposing four new SKUs sounds like a large investment. Proposing a single algae DHA platform that unlocks four product positions across a 5-year customer lifecycle sounds like infrastructure. The same recommendation reads very differently depending on which lens you use to present it.</p>
+    </div>
+    <div class="cs-ref-item">
+      <span class="cs-ref-n">02</span>
+      <p class="cs-ref-text">The <strong>three-source evidence structure</strong> was deliberate. Any one data point — internal search queries, customer feedback, or Amazon data — can be dismissed as anecdotal. All three independently pointing to the same gap made the case much harder to argue against in a board setting. Evidence that arrives from multiple directions at the same conclusion carries significantly more weight than a single strong signal.</p>
+    </div>
+    <div class="cs-ref-item">
+      <span class="cs-ref-n">03</span>
+      <p class="cs-ref-text">Starting with the churn data was the right entry point. The <strong>34% above-average churn rate</strong> in the 28-35 female cohort reframed the entire conversation: this was not just a new product opportunity, it was an existing retention failure with an available fix. That reframe changed the energy in the room entirely.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cs-nav-footer">
+  <a href="case-08-pim-v2.html" class="cs-nav-link">
+    <div>
+      <span class="cs-nav-label">Next case</span>
+      <div class="cs-nav-title">Custom PIM for PrecisionSense</div>
+    </div>
+    <span class="cs-nav-arrow">→</span>
+  </a>
+  <a href="portfolio-v2.html" class="cs-nav-link" style="flex-direction:row-reverse;">
+    <div style="text-align:right;">
+      <span class="cs-nav-label">All work</span>
+      <div class="cs-nav-title">Back to portfolio</div>
+    </div>
+    <span class="cs-nav-arrow">↑</span>
+  </a>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=window.innerWidth/2,my=window.innerHeight/2,tx=mx,ty=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){tx+=(mx-tx)*0.12;ty+=(my-ty)*0.12;curR.style.left=tx+'px';curR.style.top=ty+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('lh'));el.addEventListener('mouseleave',()=>document.body.classList.remove('lh'));});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.06,rootMargin:'0px 0px -48px 0px'});
+document.querySelectorAll('.au').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
