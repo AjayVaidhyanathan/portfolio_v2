@@ -84,6 +84,22 @@ export default function Hero() {
                 <motion.p className="text-[17px] leading-[1.75] text-[rgba(255,255,255,0.55)] max-w-[520px] font-light" variants={childVariants}>
                     I work across <strong className="text-[rgba(255,255,255,0.85)] font-medium">discovery, strategy, and execution</strong> - with a background in founding, venture capital, and hands-on delivery. Based in Munich, open across Europe.
                 </motion.p>
+
+            </motion.div>
+
+            {/* Hero CSPO Badge (Right Side) */}
+            <motion.div
+                className="hidden lg:flex absolute right-16 top-1/2 -translate-y-1/2 flex-col items-center gap-5 z-10"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+            >
+                <div className="w-[160px] h-[160px] rounded-full bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] flex items-center justify-center p-2 backdrop-blur-sm transition-transform hover:scale-105 duration-500">
+                    <img src="/sa-cspo-600.png" alt="Certified Scrum Product Owner Badge" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
+                </div>
+                <span className="font-body text-[11px] font-semibold tracking-[0.15em] uppercase text-[var(--sand)] opacity-80 bg-[var(--navy2)] px-4 py-1.5 rounded-full border border-[rgba(232,213,176,0.15)] shadow-lg">
+                    CSPO Certified
+                </span>
             </motion.div>
 
             <motion.div
