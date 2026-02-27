@@ -72,15 +72,33 @@ export default function Contact() {
 
                 {/* Social links */}
                 <div className="flex gap-7 mt-6">
-                    {['LinkedIn', 'Twitter', 'Read.cv', 'Resume'].map(link => (
+                    <a
+                        href="https://linkedin.com/in/ajay-swaminathan"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[12px] font-medium tracking-[0.06em] uppercase text-[rgba(255,255,255,0.35)] hover:text-[var(--sand)] transition-colors"
+                    >
+                        LinkedIn
+                    </a>
+                    <div className="flex gap-4">
                         <a
-                            key={link}
-                            href="#"
+                            href="/cv-en.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-[12px] font-medium tracking-[0.06em] uppercase text-[rgba(255,255,255,0.35)] hover:text-[var(--sand)] transition-colors"
                         >
-                            {link}
+                            Resume (EN)
                         </a>
-                    ))}
+                        <span className="text-[rgba(255,255,255,0.1)]">/</span>
+                        <a
+                            href="/cv-de.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[12px] font-medium tracking-[0.06em] uppercase text-[rgba(255,255,255,0.35)] hover:text-[var(--sand)] transition-colors"
+                        >
+                            Lebenslauf (DE)
+                        </a>
+                    </div>
                 </div>
             </motion.div>
 

@@ -35,12 +35,24 @@ export default function About() {
                         Most recently at <strong className="text-[rgba(255,255,255,0.85)] font-medium">DreamDriven</strong> (B2C venture builder), with prior experience at <strong className="text-[rgba(255,255,255,0.85)] font-medium">Mountain Alliance</strong> (PE/VC) and <strong className="text-[rgba(255,255,255,0.85)] font-medium">Colayer.</strong> Before that I founded <strong className="text-[rgba(255,255,255,0.85)] font-medium">Fluxdart Technology,</strong> owning the full product lifecycle for 5+ mobile apps. Based in Munich - open to hybrid or remote roles across Europe.
                     </p>
 
-                    <a
-                        href="#"
-                        className="inline-flex items-center gap-3 font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-[var(--sand)] border-b border-[rgba(232,213,176,0.3)] pb-1.5 transition-all hover:border-[var(--sand)] hover:gap-[18px] relative z-10"
-                    >
-                        Download resume →
-                    </a>
+                    <div className="flex gap-6 relative z-10">
+                        <a
+                            href="/cv-en.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-[var(--sand)] border-b border-[rgba(232,213,176,0.2)] pb-1.5 transition-all hover:border-[var(--sand)] hover:gap-4"
+                        >
+                            Resume (EN) →
+                        </a>
+                        <a
+                            href="/cv-de.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-[var(--sand)] border-b border-[rgba(232,213,176,0.2)] pb-1.5 transition-all hover:border-[var(--sand)] hover:gap-4"
+                        >
+                            Lebenslauf (DE) →
+                        </a>
+                    </div>
                 </motion.div>
 
                 {/* Right panel — cream */}
